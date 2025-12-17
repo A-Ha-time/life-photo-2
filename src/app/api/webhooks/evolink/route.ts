@@ -4,6 +4,8 @@ import {ensureSchema, sql} from '@/server/db';
 import {getEvolinkWebhookSecret} from '@/server/env';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 function collectImageUrls(value: unknown, out: Set<string>) {
   if (typeof value === 'string') {

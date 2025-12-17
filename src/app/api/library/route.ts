@@ -5,6 +5,8 @@ import {getUserId} from '@/server/user';
 import {ensureSchema, sql} from '@/server/db';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const QuerySchema = z.object({
   tab: z.enum(['all', 'favorites']).default('all'),

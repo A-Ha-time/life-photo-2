@@ -7,6 +7,8 @@ import {ensureSchema, sql} from '@/server/db';
 import {getSceneById} from '@/lib/scenes';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const CreateGenerationSchema = z.object({
   sceneId: z.string().min(1),
