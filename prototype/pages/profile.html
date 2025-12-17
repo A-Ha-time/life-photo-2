@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 高端 AI 摄影工作室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/photography-theme.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+
+<body style="padding-top: 80px;">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="navbar-logo">
+                <i class="fas fa-camera-retro"></i>
+                LUMINA STUDIO
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="home.html" class="navbar-link">首页</a></li>
+                <li><a href="create.html" class="navbar-link">创作</a></li>
+                <li><a href="profile.html" class="navbar-link active">个人中心</a></li>
+                <li><a href="privacy.html" class="navbar-link">隐私·协议</a></li>
+            </ul>
+            <a href="create.html" class="navbar-cta">开始创作</a>
+        </div>
+    </nav>
+    <section class="min-h-screen py-16 px-6 relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-900/20 to-slate-900"></div>
+
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Profile Header -->
+            <div class="card mb-8">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <!-- Avatar -->
+                    <div class="relative">
+                        <div class="w-32 h-32 rounded-full overflow-hidden ring-4 ring-purple-500/50">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+                                alt="用户头像" class="w-full h-full object-cover">
+                        </div>
+                        <button
+                            class="absolute bottom-0 right-0 w-10 h-10 rounded-full gradient-bg flex items-center justify-center hover:scale-110 transition-transform">
+                            <i class="fas fa-camera text-white"></i>
+                        </button>
+                    </div>
+
+                    <!-- User Info -->
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 class="text-3xl font-bold text-white mb-2">张三</h1>
+                        <p class="text-slate-400 mb-4">zhangsan@example.com</p>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                            <span class="badge">
+                                <i class="fas fa-crown text-yellow-400"></i>
+                                高级会员
+                            </span>
+                            <span class="badge">
+                                <i class="fas fa-fire"></i>
+                                连续创作 7 天
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 text-center">
+                        <div>
+                            <div class="text-3xl font-bold gradient-text mb-1">156</div>
+                            <div class="text-sm text-slate-400">生成照片</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold gradient-text mb-1">42</div>
+                            <div class="text-sm text-slate-400">收藏作品</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold gradient-text mb-1">1.2K</div>
+                            <div class="text-sm text-slate-400">获得点赞</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex gap-4 mb-8 overflow-x-auto">
+                <button
+                    class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold whitespace-nowrap">
+                    <i class="fas fa-images mr-2"></i>我的作品
+                </button>
+                <button
+                    class="px-6 py-3 rounded-xl glass text-slate-300 font-semibold hover:bg-slate-700/50 transition-all whitespace-nowrap">
+                    <i class="fas fa-heart mr-2"></i>收藏夹
+                </button>
+                <button
+                    class="px-6 py-3 rounded-xl glass text-slate-300 font-semibold hover:bg-slate-700/50 transition-all whitespace-nowrap">
+                    <i class="fas fa-history mr-2"></i>历史记录
+                </button>
+                <button
+                    class="px-6 py-3 rounded-xl glass text-slate-300 font-semibold hover:bg-slate-700/50 transition-all whitespace-nowrap">
+                    <i class="fas fa-chart-line mr-2"></i>数据统计
+                </button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600&h=600&fit=crop"
+                            alt="作品1"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-mountain text-sm"></i>
+                                攀岩
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-08</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                128
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=600&h=600&fit=crop"
+                            alt="作品2"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-water text-sm"></i>
+                                冲浪
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-07</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                95
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&h=600&fit=crop"
+                            alt="作品3"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-flag-checkered text-sm"></i>
+                                赛车
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-06</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                203
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=600&fit=crop"
+                            alt="作品4"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-plane text-sm"></i>
+                                旅行
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-05</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                167
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=600&fit=crop"
+                            alt="作品5"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-music text-sm"></i>
+                                音乐会
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-04</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                89
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=600&fit=crop"
+                            alt="作品6"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-utensils text-sm"></i>
+                                美食
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-03</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                142
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 7 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=600&fit=crop"
+                            alt="作品7"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-snowflake text-sm"></i>
+                                滑雪
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-02</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                76
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 8 -->
+                <div class="card p-0 group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-t-2xl">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=600&fit=crop"
+                            alt="作品8"
+                            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex gap-2">
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-download text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-share-alt text-white"></i>
+                                    </button>
+                                    <button
+                                        class="flex-1 py-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors">
+                                        <i class="fas fa-trash text-white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="badge">
+                                <i class="fas fa-dumbbell text-sm"></i>
+                                健身
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">2025-12-01</span>
+                            <span class="text-slate-400 flex items-center gap-1">
+                                <i class="fas fa-heart text-red-400"></i>
+                                112
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More -->
+            <div class="mt-12 text-center">
+                <button class="btn-secondary">
+                    <i class="fas fa-arrow-down mr-2"></i>
+                    加载更多
+                </button>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

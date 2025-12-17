@@ -1,0 +1,194 @@
+{
+  "Nav": {
+    "home": "首页",
+    "create": "创作",
+    "profile": "个人中心",
+    "privacy": "隐私·协议",
+    "cta": "开始创作"
+  },
+  "Language": {
+    "label": "语言",
+    "en": "English",
+    "zh": "中文",
+    "ko": "한국어",
+    "ja": "日本語"
+  },
+  "Home": {
+    "badge": "AI 驱动的专业摄影生成",
+    "titleLine1": "重塑你的",
+    "titleLine2": "精彩瞬间",
+    "subtitle": "高端 AI 摄影工作室，为你创造攀岩、冲浪、赛车等炫酷生活照片",
+    "ctaPrimary": "开始创作",
+    "ctaSecondary": "观看演示",
+    "statPhotos": "生成照片",
+    "statUsers": "满意客户",
+    "statRating": "客户评分",
+    "flowTitle1": "服务",
+    "flowTitle2": "流程",
+    "flowSubtitle": "上传照片，选择场景，AI 生成，下载分享",
+    "step1Title": "上传照片",
+    "step1Desc": "上传清晰的正面照",
+    "step2Title": "选择场景",
+    "step2Desc": "从 12+ 种精选场景中选择风格",
+    "step3Title": "AI 生成",
+    "step3Desc": "强大算法，约 30 秒完成创作",
+    "step4Title": "下载分享",
+    "step4Desc": "高清下载，一键分享社交媒体",
+    "galleryTitle1": "精选",
+    "galleryTitle2": "作品展示",
+    "gallerySubtitle": "客户的精彩瞬间，AI 的完美呈现",
+    "galleryItem1Title": "征服巅峰",
+    "galleryItem1Cat": "攀岩挑战",
+    "galleryItem2Title": "乘风破浪",
+    "galleryItem2Cat": "冲浪激情",
+    "galleryItem3Title": "速度与激情",
+    "galleryItem3Cat": "赛车竞速",
+    "galleryItem4Title": "雪域飞驰",
+    "galleryItem4Cat": "雪山滑雪",
+    "galleryItem5Title": "环游世界",
+    "galleryItem5Cat": "环球旅行",
+    "galleryItem6Title": "潮流街拍",
+    "galleryItem6Cat": "时尚潮流",
+    "testimonialsTitle1": "用户",
+    "testimonialsTitle2": "评价",
+    "testimonialsSubtitle": "他们这样评价 LUMINA STUDIO",
+    "review1Name": "李小姐",
+    "review1Text": "效果太真实了，光影和细节都很自然，发朋友圈瞬间提升质感！",
+    "review2Name": "张先生",
+    "review2Text": "流程很顺滑，上传一次就能快速切换不同场景，人物一致性也不错。",
+    "review3Name": "王先生",
+    "review3Text": "AI 技术真的太强大了！生成的照片细节丰富，光影自然。这是我用过最好的 AI 摄影服务。",
+    "ctaTitle1": "准备好创造你的",
+    "ctaTitle2": "专属瞬间",
+    "ctaTitle3": "了吗？",
+    "ctaSubtitle": "加入数万用户，开启你的 AI 摄影创作之旅",
+    "ctaButton": "立即开始免费试用"
+  },
+  "Create": {
+    "title1": "创作",
+    "title2": "中心",
+    "subtitle": "上传照片，选择场景，即刻生成专属大片",
+    "uploads": {
+      "title": "上传照片",
+      "front": "正面照",
+      "side": "侧面照",
+      "full": "全身照",
+      "clickOrDrop": "点击或拖拽上传",
+      "remove": "移除",
+      "tip": "上次上传的照片已保留"
+    },
+    "scenes": {
+      "title": "选择场景"
+    },
+    "refs": {
+      "title": "参考图片",
+      "optional": "(可选)",
+      "desc": "上传参考图片，帮助 AI 更好理解风格",
+      "count": "已上传 {count} 张"
+    },
+    "settings": {
+      "title": "高级设置",
+      "customPrompt": "自定义提示词",
+      "customPromptPlaceholder": "描述你想要的效果，例如：阳光明媚，专业摄影，高清画质",
+      "size": "尺寸",
+      "quality": "清晰度",
+      "qualityStandard": "标准",
+      "qualityHd": "高清",
+      "qualityUhd": "超高清（额外收费）"
+    },
+    "generate": {
+      "start": "开始生成",
+      "generating": "生成中…",
+      "hint": "请先上传正面照并选择场景",
+      "ready": "已满足生成条件",
+      "eta": "预计 {eta}"
+    },
+    "preview": {
+      "title": "预览",
+      "empty": "生成后的照片将在此显示",
+      "waiting": "生成中…等待结果返回",
+      "download": "下载",
+      "share": "分享",
+      "thumb": "结果 {index}",
+      "meta": "状态：{status} · {size} · {quality}",
+      "statusLine": "状态：{status} · {progress}%"
+    },
+    "share": {
+      "copied": "链接已复制",
+      "copyFailed": "复制失败"
+    },
+    "errors": {
+      "unknown": "发生未知错误"
+    }
+  },
+  "Profile": {
+    "avatarAlt": "用户头像",
+    "editAvatar": "编辑头像",
+    "emailPlaceholder": "未设置邮箱",
+    "badgePro": "高级会员",
+    "badgeStreak": "连续创作 7 天",
+    "statImages": "生成照片",
+    "statFavorites": "收藏作品",
+    "statLikes": "获得点赞",
+    "tabWorks": "我的作品",
+    "tabFavorites": "收藏夹",
+    "tabHistory": "历史记录",
+    "tabStats": "数据统计",
+    "comingSoon": "敬请期待",
+    "loading": "加载中…",
+    "empty": "暂无作品，去创作中心生成第一张照片吧。",
+    "workAlt": "作品",
+    "actions": {
+      "download": "下载",
+      "share": "分享",
+      "delete": "删除",
+      "favorite": "收藏"
+    },
+    "dialogs": {
+      "confirmDelete": "确定删除这张图片吗？"
+    },
+    "share": {
+      "copied": "链接已复制",
+      "copyFailed": "复制失败"
+    }
+  },
+  "Privacy": {
+    "title1": "隐私",
+    "title2": "服务协议",
+    "subtitle": "保护您的隐私，提供优质服务",
+    "lastUpdated": "最后更新：2025 年 12 月 9 日",
+    "privacyTitle": "隐私政策",
+    "p1Title": "1. 信息收集",
+    "p1Items": [
+      "您上传的个人照片（正面照、侧面照、全身照、参考图）",
+      "账户/资料信息（如昵称、邮箱等您主动提供的内容）",
+      "生成记录与偏好设置",
+      "使用数据与分析信息"
+    ],
+    "p2Title": "2. 信息使用",
+    "p2Items": [
+      "用于提供 AI 照片生成服务",
+      "用于改进算法和服务质量",
+      "用于个性化用户体验",
+      "用于发送服务通知和更新"
+    ],
+    "p3Title": "3. 数据安全",
+    "p3Items": ["SSL/TLS 加密传输", "访问控制与权限管理", "定期安全审计"],
+    "termsTitle": "服务条款",
+    "t1Title": "1. 服务说明",
+    "t1Text": "LUMINA STUDIO 提供基于 AI 技术的照片生成服务，帮助用户创建个性化的社交媒体照片。",
+    "t2Title": "2. 用户责任",
+    "t2Items": [
+      "确保上传的照片拥有合法使用权",
+      "不得上传违法、侵权或不当内容",
+      "不得滥用服务或进行恶意操作",
+      "遵守相关法律法规"
+    ],
+    "t3Title": "3. 知识产权",
+    "t3Text": "您拥有生成照片的使用权，我们保留技术与算法相关的知识产权。",
+    "t4Title": "4. 服务限制",
+    "t4Items": ["暂停或终止违规账户", "修改或更新服务内容", "设置使用配额和限制"],
+    "contactTitle": "联系我们",
+    "contactSubtitle": "如有任何疑问或建议，请随时联系我们"
+  }
+}

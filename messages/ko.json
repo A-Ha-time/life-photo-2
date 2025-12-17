@@ -1,0 +1,179 @@
+{
+  "Nav": {
+    "home": "홈",
+    "create": "제작",
+    "profile": "프로필",
+    "privacy": "개인정보·약관",
+    "cta": "만들기 시작"
+  },
+  "Language": {
+    "label": "언어",
+    "en": "English",
+    "zh": "中文",
+    "ko": "한국어",
+    "ja": "日本語"
+  },
+  "Home": {
+    "badge": "AI 기반 프로 사진 생성",
+    "titleLine1": "당신의",
+    "titleLine2": "순간을 재창조하세요",
+    "subtitle": "클라이밍, 서핑, 레이싱 등 라이프스타일 장면을 현실감 있게 만들어 드립니다.",
+    "ctaPrimary": "만들기 시작",
+    "ctaSecondary": "데모 보기",
+    "statPhotos": "생성된 사진",
+    "statUsers": "만족 고객",
+    "statRating": "사용자 평점",
+    "flowTitle1": "사용",
+    "flowTitle2": "방법",
+    "flowSubtitle": "업로드 → 장면 선택 → 생성 → 공유",
+    "step1Title": "업로드",
+    "step1Desc": "선명한 정면 사진 업로드",
+    "step2Title": "장면 선택",
+    "step2Desc": "12+ 스타일 중 선택",
+    "step3Title": "생성",
+    "step3Desc": "약 30초 내 생성",
+    "step4Title": "다운로드 & 공유",
+    "step4Desc": "HD 다운로드 및 공유",
+    "galleryTitle1": "추천",
+    "galleryTitle2": "갤러리",
+    "gallerySubtitle": "AI가 만든 현실적인 순간들",
+    "galleryItem1Title": "정상 도전",
+    "galleryItem1Cat": "클라이밍",
+    "galleryItem2Title": "파도를 타다",
+    "galleryItem2Cat": "서핑",
+    "galleryItem3Title": "스피드 러시",
+    "galleryItem3Cat": "레이싱",
+    "galleryItem4Title": "설산 질주",
+    "galleryItem4Cat": "스키",
+    "galleryItem5Title": "월드 트립",
+    "galleryItem5Cat": "여행",
+    "galleryItem6Title": "스트리트 스타일",
+    "galleryItem6Cat": "패션",
+    "testimonialsTitle1": "사용자",
+    "testimonialsTitle2": "후기",
+    "testimonialsSubtitle": "LUMINA STUDIO에 대한 평가",
+    "review1Name": "이 님",
+    "review1Text": "결과가 정말 자연스럽고 현실감 있어요. 조명과 디테일이 훌륭합니다.",
+    "review2Name": "장 님",
+    "review2Text": "한 번 업로드로 여러 장면을 쉽게 시도할 수 있어요. 일관성도 좋습니다.",
+    "review3Name": "왕 님",
+    "review3Text": "디테일과 빛이 자연스럽습니다. 제가 써본 AI 사진 서비스 중 최고예요.",
+    "ctaTitle1": "당신만의 ",
+    "ctaTitle2": "순간",
+    "ctaTitle3": "을 만들 준비가 되셨나요?",
+    "ctaSubtitle": "수만 명과 함께 AI 사진 제작을 시작하세요.",
+    "ctaButton": "무료로 시작"
+  },
+  "Create": {
+    "title1": "제작",
+    "title2": "스튜디오",
+    "subtitle": "사진 업로드 → 장면 선택 → 즉시 생성",
+    "uploads": {
+      "title": "사진 업로드",
+      "front": "정면 사진",
+      "side": "측면 사진",
+      "full": "전신 사진",
+      "clickOrDrop": "클릭하거나 드래그하여 업로드",
+      "remove": "삭제",
+      "tip": "이전 업로드가 유지됩니다"
+    },
+    "scenes": {
+      "title": "장면 선택"
+    },
+    "refs": {
+      "title": "참고 이미지",
+      "optional": "(선택)",
+      "desc": "스타일 이해를 돕는 참고 이미지를 업로드하세요",
+      "count": "{count}개 업로드됨"
+    },
+    "settings": {
+      "title": "고급 설정",
+      "customPrompt": "커스텀 프롬프트",
+      "customPromptPlaceholder": "원하는 분위기를 설명하세요 (예: 햇살, 프로 사진, 초현실)",
+      "size": "크기",
+      "quality": "품질",
+      "qualityStandard": "표준",
+      "qualityHd": "HD",
+      "qualityUhd": "UHD(추가 비용)"
+    },
+    "generate": {
+      "start": "생성 시작",
+      "generating": "생성 중…",
+      "hint": "정면 사진 업로드와 장면 선택이 필요합니다",
+      "ready": "생성 준비 완료",
+      "eta": "예상 {eta}"
+    },
+    "preview": {
+      "title": "미리보기",
+      "empty": "생성된 사진이 여기에 표시됩니다",
+      "waiting": "생성 중… 결과를 기다리는 중",
+      "download": "다운로드",
+      "share": "공유",
+      "thumb": "결과 {index}",
+      "meta": "상태: {status} · {size} · {quality}",
+      "statusLine": "상태: {status} · {progress}%"
+    },
+    "share": {
+      "copied": "링크가 복사되었습니다",
+      "copyFailed": "복사 실패"
+    },
+    "errors": {
+      "unknown": "오류가 발생했습니다"
+    }
+  },
+  "Profile": {
+    "avatarAlt": "아바타",
+    "editAvatar": "아바타 편집",
+    "emailPlaceholder": "이메일 없음",
+    "badgePro": "프로 멤버",
+    "badgeStreak": "7일 연속",
+    "statImages": "생성",
+    "statFavorites": "즐겨찾기",
+    "statLikes": "좋아요",
+    "tabWorks": "내 작품",
+    "tabFavorites": "즐겨찾기",
+    "tabHistory": "기록",
+    "tabStats": "통계",
+    "comingSoon": "준비 중",
+    "loading": "로딩 중…",
+    "empty": "아직 항목이 없습니다. 제작 스튜디오에서 첫 사진을 만들어보세요.",
+    "workAlt": "생성 결과",
+    "actions": {
+      "download": "다운로드",
+      "share": "공유",
+      "delete": "삭제",
+      "favorite": "즐겨찾기"
+    },
+    "dialogs": {
+      "confirmDelete": "이 이미지를 삭제할까요?"
+    },
+    "share": {
+      "copied": "링크가 복사되었습니다",
+      "copyFailed": "복사 실패"
+    }
+  },
+  "Privacy": {
+    "title1": "개인정보",
+    "title2": "약관",
+    "subtitle": "개인정보를 보호하고 좋은 서비스를 제공합니다.",
+    "lastUpdated": "마지막 업데이트: 2025-12-09",
+    "privacyTitle": "개인정보 처리방침",
+    "p1Title": "1. 수집하는 정보",
+    "p1Items": ["업로드한 사진(정면/측면/전신/참고)", "생성 기록 및 설정", "사용/분석 정보"],
+    "p2Title": "2. 이용 목적",
+    "p2Items": ["AI 사진 생성 제공", "품질 개선", "개인화", "서비스 안내"],
+    "p3Title": "3. 보안",
+    "p3Items": ["TLS 전송 암호화", "접근 제어", "보안 점검"],
+    "termsTitle": "서비스 이용약관",
+    "t1Title": "1. 서비스",
+    "t1Text": "LUMINA STUDIO는 AI 기반 사진 생성 서비스를 제공합니다.",
+    "t2Title": "2. 사용자 책임",
+    "t2Items": ["업로드 권한 보유", "불법/침해 콘텐츠 업로드 금지", "서비스 남용 금지"],
+    "t3Title": "3. 지식재산",
+    "t3Text": "생성 결과는 사용 권한을 제공하며, 기술/알고리즘 권리는 당사에 귀속됩니다.",
+    "t4Title": "4. 제한",
+    "t4Items": ["규정 위반 계정 제한", "쿼터/제한 조정", "서비스 업데이트"],
+    "contactTitle": "문의",
+    "contactSubtitle": "문의 사항이 있으면 연락해 주세요."
+  }
+}

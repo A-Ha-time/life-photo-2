@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创作中心 - 高端 AI 摄影工作室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/photography-theme.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <style>
+        .upload-slot {
+            border: 2px dashed var(--border-gold);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(42, 42, 42, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-slot:hover {
+            border-color: var(--gold-primary);
+            background: rgba(42, 42, 42, 0.5);
+        }
+
+        .upload-slot.dragover {
+            border-color: var(--gold-light);
+            background: rgba(212, 175, 55, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-slot.has-image {
+            border-style: solid;
+            padding: 0;
+        }
+
+        .upload-slot img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .scene-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scene-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .scene-card.selected {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .scene-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body style="padding-top: 80px;">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="home.html" class="navbar-logo">
+                <i class="fas fa-camera-retro"></i>
+                LUMINA STUDIO
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="home.html" class="navbar-link">首页</a></li>
+                <li><a href="create.html" class="navbar-link active">创作</a></li>
+                <li><a href="profile.html" class="navbar-link">个人中心</a></li>
+                <li><a href="privacy.html" class="navbar-link">隐私·协议</a></li>
+            </ul>
+            <a href="create.html" class="navbar-cta">开始创作</a>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container-studio" style="padding: 3rem 2rem;">
+        <!-- 页面标题 -->
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 class="title-elegant" style="font-size: 3rem; margin-bottom: 0.75rem;">
+                创作 <span class="title-gold">中心</span>
+            </h1>
+            <p class="subtitle-elegant">上传照片，选择场景，即刻生成专属大片</p>
+        </div>
+
+        <!-- 三栏布局 -->
+        <div style="display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 2rem;">
+
+            <!-- 左栏：照片上传区 -->
+            <div class="studio-card">
+                <h2
+                    style="font-size: 1.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-upload"></i>
+                    上传照片
+                </h2>
+
+                <!-- 正面照 - 必传 -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label
+                        style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.95rem;">
+                        正面照 <span style="color: var(--error);">*</span>
+                    </label>
+                    <div class="upload-slot" id="frontUpload" onclick="document.getElementById('frontInput').click()">
+                        <input type="file" id="frontInput" accept="image/*" style="display: none;"
+                            onchange="handleUpload(event, 'front')">
+                        <i class="fas fa-user"
+                            style="font-size: 2rem; color: var(--gold-primary); margin-bottom: 0.5rem;"></i>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">点击或拖拽上传</p>
+                    </div>
+                </div>
+
+                <!-- 侧面照 - 可选 -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label
+                        style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.95rem;">
+                        侧面照 <span style="color: var(--text-muted); font-size: 0.75rem;">(可选)</span>
+                    </label>
+                    <div class="upload-slot" id="sideUpload" onclick="document.getElementById('sideInput').click()">
+                        <input type="file" id="sideInput" accept="image/*" style="display: none;"
+                            onchange="handleUpload(event, 'side')">
+                        <i class="fas fa-user-circle"
+                            style="font-size: 2rem; color: var(--gold-primary); margin-bottom: 0.5rem;"></i>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">点击或拖拽上传</p>
+                    </div>
+                </div>
+
+                <!-- 全身照 - 可选 -->
+                <div style="margin-bottom: 1.5rem;">
+                    <label
+                        style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.95rem;">
+                        全身照 <span style="color: var(--text-muted); font-size: 0.75rem;">(可选)</span>
+                    </label>
+                    <div class="upload-slot" id="fullUpload" onclick="document.getElementById('fullInput').click()">
+                        <input type="file" id="fullInput" accept="image/*" style="display: none;"
+                            onchange="handleUpload(event, 'full')">
+                        <i class="fas fa-male"
+                            style="font-size: 2rem; color: var(--gold-primary); margin-bottom: 0.5rem;"></i>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">点击或拖拽上传</p>
+                    </div>
+                </div>
+
+                <!-- 保留的照片提示 -->
+                <div
+                    style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; margin-top: 1.5rem;">
+                    <div
+                        style="display: flex; align-items: center; gap: 0.5rem; color: var(--success); font-size: 0.875rem;">
+                        <i class="fas fa-info-circle"></i>
+                        <span>上次上传的照片已保留</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中栏：场景选择 + 参考图 -->
+            <div class="studio-card">
+                <h2
+                    style="font-size: 1.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-palette"></i>
+                    选择场景
+                </h2>
+
+                <!-- 场景网格 -->
+                <div
+                    style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; max-height: 500px; overflow-y: auto; padding-right: 0.5rem;">
+                    <!-- 场景卡片 -->
+                    <div class="scene-card" onclick="selectScene(this, '攀岩挑战')">
+                        <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=400&h=300&fit=crop"
+                            alt="攀岩">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">攀岩挑战</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">极限运动</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '冲浪激情')">
+                        <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&h=300&fit=crop"
+                            alt="冲浪">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">冲浪激情</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">极限运动</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '赛车竞速')">
+                        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&h=300&fit=crop"
+                            alt="赛车">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">赛车竞速</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">极限运动</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '雪山滑雪')">
+                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop"
+                            alt="滑雪">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">雪山滑雪</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">极限运动</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '环球旅行')">
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop"
+                            alt="旅行">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">环球旅行</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">旅行探险</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '沙漠探险')">
+                        <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&h=300&fit=crop"
+                            alt="沙漠">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">沙漠探险</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">旅行探险</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '音乐狂欢')">
+                        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=300&fit=crop"
+                            alt="音乐会">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">音乐狂欢</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">娱乐生活</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '美食体验')">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop"
+                            alt="美食">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">美食体验</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">娱乐生活</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '健身运动')">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop"
+                            alt="健身">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">健身运动</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">娱乐生活</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '商务精英')">
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=300&fit=crop"
+                            alt="商务">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">商务精英</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">职业形象</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '艺术创作')">
+                        <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=300&fit=crop"
+                            alt="艺术">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">艺术创作</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">职业形象</div>
+                        </div>
+                    </div>
+
+                    <div class="scene-card" onclick="selectScene(this, '时尚潮流')">
+                        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&h=300&fit=crop"
+                            alt="时尚">
+                        <div style="padding: 0.75rem; background: var(--bg-card);">
+                            <div style="font-weight: 600; color: var(--text-primary); font-size: 0.875rem;">时尚潮流</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">娱乐生活</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-gold" style="margin: 1.5rem 0;"></div>
+
+                <!-- 参考图上传 -->
+                <div>
+                    <h3
+                        style="font-size: 1.125rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-image"></i>
+                        参考图片 <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 400;">(可选)</span>
+                    </h3>
+                    <div class="upload-slot" style="padding: 1.5rem;"
+                        onclick="document.getElementById('refInput').click()">
+                        <input type="file" id="refInput" accept="image/*" multiple style="display: none;"
+                            onchange="handleRefUpload(event)">
+                        <i class="fas fa-images"
+                            style="font-size: 1.5rem; color: var(--gold-primary); margin-bottom: 0.5rem;"></i>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">上传参考图片，帮助 AI 更好理解风格</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右栏：高级设置 + 预览 -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- 上半部分：高级设置 -->
+                <div class="studio-card" style="flex: 0 0 auto;">
+                    <h2
+                        style="font-size: 1.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-sliders-h"></i>
+                        高级设置
+                    </h2>
+
+                    <!-- 提示词 -->
+                    <div style="margin-bottom: 1rem;">
+                        <label
+                            style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            自定义提示词
+                        </label>
+                        <textarea class="input-studio" rows="2" placeholder="描述你想要的效果，例如：阳光明媚，专业摄影，高清画质"
+                            style="resize: vertical; font-size: 0.875rem; padding: 0.75rem 1rem;"></textarea>
+                    </div>
+
+                    <!-- 照片尺寸和清晰度 - 并排显示 -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                        <!-- 照片尺寸 -->
+                        <div>
+                            <label
+                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.875rem;">
+                                尺寸
+                            </label>
+                            <select class="input-studio" style="font-size: 0.875rem; padding: 0.75rem 1rem;">
+                                <option>1024x1024</option>
+                                <option>1024x768</option>
+                                <option>768x1024</option>
+                                <option>2048x2048</option>
+                            </select>
+                        </div>
+
+                        <!-- 清晰度 -->
+                        <div>
+                            <label
+                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.875rem;">
+                                清晰度
+                            </label>
+                            <select class="input-studio" style="font-size: 0.875rem; padding: 0.75rem 1rem;">
+                                <option>标准</option>
+                                <option selected>高清</option>
+                                <option>超高清</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 生成按钮 -->
+                    <button class="btn-gold" id="generateBtn" disabled
+                        style="width: 100%; justify-content: center; opacity: 0.5; cursor: not-allowed;">
+                        <i class="fas fa-wand-magic-sparkles" style="margin-right: 0.5rem;"></i>
+                        开始生成
+                    </button>
+                    <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.75rem; text-align: center;">
+                        请先上传正面照并选择场景
+                    </p>
+                </div>
+
+                <!-- 下半部分：预览区域 -->
+                <div class="studio-card" style="flex: 1; min-height: 300px;">
+                    <h2
+                        style="font-size: 1.5rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-eye"></i>
+                        预览
+                    </h2>
+
+                    <!-- 预览区域 -->
+                    <div
+                        style="border: 2px solid var(--border-gold); border-radius: 12px; padding: 1rem; background: rgba(42, 42, 42, 0.3); min-height: 250px; display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: var(--text-muted);" id="previewArea">
+                            <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                            <p style="font-size: 0.875rem;">生成后的照片将在此显示</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let uploadedPhotos = {
+            front: null,
+            side: null,
+            full: null
+        };
+        let selectedSceneName = null;
+
+        function handleUpload(event, type) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    uploadedPhotos[type] = e.target.result;
+                    const uploadSlot = document.getElementById(type + 'Upload');
+                    uploadSlot.classList.add('has-image');
+                    uploadSlot.innerHTML = `
+                        <img src="${e.target.result}" alt="${type}照片">
+                        <button onclick="removePhoto('${type}')" style="position: absolute; top: 0.5rem; right: 0.5rem; width: 32px; height: 32px; border-radius: 50%; background: var(--error); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    updateGenerateButton();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePhoto(type) {
+            event.stopPropagation();
+            uploadedPhotos[type] = null;
+            const uploadSlot = document.getElementById(type + 'Upload');
+            uploadSlot.classList.remove('has-image');
+
+            const icons = {
+                front: 'fa-user',
+                side: 'fa-user-circle',
+                full: 'fa-male'
+            };
+
+            uploadSlot.innerHTML = `
+                <i class="fas ${icons[type]}" style="font-size: 2rem; color: var(--gold-primary); margin-bottom: 0.5rem;"></i>
+                <p style="color: var(--text-muted); font-size: 0.875rem;">点击或拖拽上传</p>
+            `;
+
+            updateGenerateButton();
+        }
+
+        function selectScene(element, sceneName) {
+            document.querySelectorAll('.scene-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedSceneName = sceneName;
+            updateGenerateButton();
+        }
+
+        function handleRefUpload(event) {
+            const files = event.target.files;
+            console.log('上传了', files.length, '张参考图');
+        }
+
+        function updateGenerateButton() {
+            const btn = document.getElementById('generateBtn');
+            if (uploadedPhotos.front && selectedSceneName) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            }
+        }
+
+        // 拖拽上传支持
+        ['frontUpload', 'sideUpload', 'fullUpload'].forEach(id => {
+            const element = document.getElementById(id);
+
+            element.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                element.classList.add('dragover');
+            });
+
+            element.addEventListener('dragleave', () => {
+                element.classList.remove('dragover');
+            });
+
+            element.addEventListener('drop', (e) => {
+                e.preventDefault();
+                element.classList.remove('dragover');
+                const type = id.replace('Upload', '');
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const input = document.getElementById(type + 'Input');
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    input.files = dataTransfer.files;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

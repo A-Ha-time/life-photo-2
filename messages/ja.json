@@ -1,0 +1,179 @@
+{
+  "Nav": {
+    "home": "ホーム",
+    "create": "作成",
+    "profile": "プロフィール",
+    "privacy": "プライバシー・規約",
+    "cta": "作成を開始"
+  },
+  "Language": {
+    "label": "言語",
+    "en": "English",
+    "zh": "中文",
+    "ko": "한국어",
+    "ja": "日本語"
+  },
+  "Home": {
+    "badge": "AI 駆動のプロ写真生成",
+    "titleLine1": "あなたの",
+    "titleLine2": "最高の瞬間を再現",
+    "subtitle": "クライミング、サーフィン、レースなどのシーンをリアルに生成。SNS向けに最適。",
+    "ctaPrimary": "作成を開始",
+    "ctaSecondary": "デモを見る",
+    "statPhotos": "生成枚数",
+    "statUsers": "満足ユーザー",
+    "statRating": "評価",
+    "flowTitle1": "使い方",
+    "flowTitle2": "",
+    "flowSubtitle": "アップロード → シーン選択 → 生成 → 共有",
+    "step1Title": "アップロード",
+    "step1Desc": "クリアな正面写真をアップロード",
+    "step2Title": "シーン選択",
+    "step2Desc": "12+ のスタイルから選択",
+    "step3Title": "生成",
+    "step3Desc": "約30秒で生成",
+    "step4Title": "DL & 共有",
+    "step4Desc": "高画質でダウンロード・共有",
+    "galleryTitle1": "注目の",
+    "galleryTitle2": "作品",
+    "gallerySubtitle": "AI が作るリアルな瞬間",
+    "galleryItem1Title": "頂上へ",
+    "galleryItem1Cat": "クライミング",
+    "galleryItem2Title": "波に乗る",
+    "galleryItem2Cat": "サーフィン",
+    "galleryItem3Title": "スピード感",
+    "galleryItem3Cat": "レース",
+    "galleryItem4Title": "雪山を滑走",
+    "galleryItem4Cat": "スキー",
+    "galleryItem5Title": "世界旅行",
+    "galleryItem5Cat": "旅行",
+    "galleryItem6Title": "ストリート",
+    "galleryItem6Cat": "ファッション",
+    "testimonialsTitle1": "ユーザー",
+    "testimonialsTitle2": "の声",
+    "testimonialsSubtitle": "LUMINA STUDIO のレビュー",
+    "review1Name": "李さん",
+    "review1Text": "光や質感が自然で、本当にリアル。SNSにそのまま使えます。",
+    "review2Name": "張さん",
+    "review2Text": "一度アップロードすると複数のシーンをすぐ試せて便利。安定感も良い。",
+    "review3Name": "王さん",
+    "review3Text": "ディテールが豊かで光も自然。使った中で一番のAI写真サービスです。",
+    "ctaTitle1": "あなたの",
+    "ctaTitle2": "特別な瞬間",
+    "ctaTitle3": "を作りませんか？",
+    "ctaSubtitle": "多くのユーザーと一緒に、AI写真制作を始めましょう。",
+    "ctaButton": "無料で試す"
+  },
+  "Create": {
+    "title1": "作成",
+    "title2": "スタジオ",
+    "subtitle": "写真をアップロードし、シーンを選んで、すぐ生成。",
+    "uploads": {
+      "title": "写真アップロード",
+      "front": "正面写真",
+      "side": "横顔写真",
+      "full": "全身写真",
+      "clickOrDrop": "クリックまたはドラッグ＆ドロップでアップロード",
+      "remove": "削除",
+      "tip": "前回のアップロードは保持されます"
+    },
+    "scenes": {
+      "title": "シーン選択"
+    },
+    "refs": {
+      "title": "参照画像",
+      "optional": "(任意)",
+      "desc": "スタイル理解のための参照画像をアップロード",
+      "count": "{count} 枚アップロード済み"
+    },
+    "settings": {
+      "title": "詳細設定",
+      "customPrompt": "カスタムプロンプト",
+      "customPromptPlaceholder": "希望する雰囲気（例：晴天、プロ写真、超リアル）",
+      "size": "サイズ",
+      "quality": "画質",
+      "qualityStandard": "標準",
+      "qualityHd": "高画質",
+      "qualityUhd": "超高画質（追加料金）"
+    },
+    "generate": {
+      "start": "生成開始",
+      "generating": "生成中…",
+      "hint": "正面写真のアップロードとシーン選択が必要です",
+      "ready": "生成できます",
+      "eta": "予想 {eta}"
+    },
+    "preview": {
+      "title": "プレビュー",
+      "empty": "生成結果がここに表示されます",
+      "waiting": "生成中…結果を待っています",
+      "download": "ダウンロード",
+      "share": "共有",
+      "thumb": "結果 {index}",
+      "meta": "状態: {status} · {size} · {quality}",
+      "statusLine": "状態: {status} · {progress}%"
+    },
+    "share": {
+      "copied": "リンクをコピーしました",
+      "copyFailed": "コピーに失敗しました"
+    },
+    "errors": {
+      "unknown": "エラーが発生しました"
+    }
+  },
+  "Profile": {
+    "avatarAlt": "アバター",
+    "editAvatar": "アバター編集",
+    "emailPlaceholder": "メール未設定",
+    "badgePro": "プロ会員",
+    "badgeStreak": "7日連続",
+    "statImages": "生成",
+    "statFavorites": "お気に入り",
+    "statLikes": "いいね",
+    "tabWorks": "作品",
+    "tabFavorites": "お気に入り",
+    "tabHistory": "履歴",
+    "tabStats": "分析",
+    "comingSoon": "近日公開",
+    "loading": "読み込み中…",
+    "empty": "まだありません。作成スタジオで最初の写真を作りましょう。",
+    "workAlt": "生成作品",
+    "actions": {
+      "download": "ダウンロード",
+      "share": "共有",
+      "delete": "削除",
+      "favorite": "お気に入り"
+    },
+    "dialogs": {
+      "confirmDelete": "この画像を削除しますか？"
+    },
+    "share": {
+      "copied": "リンクをコピーしました",
+      "copyFailed": "コピーに失敗しました"
+    }
+  },
+  "Privacy": {
+    "title1": "プライバシー",
+    "title2": "規約",
+    "subtitle": "プライバシーを保護し、良質なサービスを提供します。",
+    "lastUpdated": "最終更新: 2025-12-09",
+    "privacyTitle": "プライバシーポリシー",
+    "p1Title": "1. 収集する情報",
+    "p1Items": ["アップロード画像（正面/横顔/全身/参照）", "生成履歴と設定", "利用状況・分析情報"],
+    "p2Title": "2. 利用目的",
+    "p2Items": ["AI写真生成の提供", "品質改善", "パーソナライズ", "サービス通知"],
+    "p3Title": "3. セキュリティ",
+    "p3Items": ["TLSによる暗号化", "アクセス制御", "セキュリティレビュー"],
+    "termsTitle": "利用規約",
+    "t1Title": "1. サービス概要",
+    "t1Text": "LUMINA STUDIOはAIによる写真生成サービスを提供します。",
+    "t2Title": "2. ユーザーの責任",
+    "t2Items": ["利用権限のある画像のみアップロード", "違法/侵害コンテンツの禁止", "サービスの乱用禁止"],
+    "t3Title": "3. 知的財産",
+    "t3Text": "生成画像の利用権を提供します。技術・アルゴリズムの権利は当社に帰属します。",
+    "t4Title": "4. 制限",
+    "t4Items": ["不正利用アカウントの停止", "上限/制限の調整", "サービスの更新"],
+    "contactTitle": "お問い合わせ",
+    "contactSubtitle": "ご不明点があればご連絡ください。"
+  }
+}

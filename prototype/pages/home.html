@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 高端 AI 摄影工作室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/photography-theme.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">
+                <i class="fas fa-camera-retro"></i>
+                LUMINA STUDIO
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="home.html" class="navbar-link active">首页</a></li>
+                <li><a href="create.html" class="navbar-link">创作</a></li>
+                <li><a href="profile.html" class="navbar-link">个人中心</a></li>
+                <li><a href="privacy.html" class="navbar-link">隐私·协议</a></li>
+            </ul>
+            <a href="create.html" class="navbar-cta">开始创作</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="photo-studio-bg vignette"
+        style="background-image: url('https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1920&h=1080&fit=crop'); min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; margin-top: 80px;">
+        <div class="container-studio" style="position: relative; z-index: 10; text-align: center;">
+            <div class="animate-fade-in-up">
+                <div class="inline-flex items-center gap-3 px-6 py-3 floating-card rounded-full mb-8"
+                    style="display: inline-flex; align-items: center; gap: 0.75rem;">
+                    <i class="fas fa-sparkles" style="color: var(--gold-primary); font-size: 1.25rem;"></i>
+                    <span style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 600;">AI
+                        驱动的专业摄影生成</span>
+                </div>
+            </div>
+
+            <h1 class="title-elegant animate-fade-in-up delay-100"
+                style="font-size: 5rem; margin-bottom: 1.5rem; opacity: 0; animation-fill-mode: forwards;">
+                重塑你的<br>
+                <span class="title-gold">精彩瞬间</span>
+            </h1>
+
+            <p class="subtitle-elegant animate-fade-in-up delay-200"
+                style="font-size: 1.5rem; max-width: 700px; margin: 0 auto 3rem; opacity: 0; animation-fill-mode: forwards;">
+                专业 AI 摄影工作室，为你创造攀岩、冲浪、赛车等炫酷生活照片
+            </p>
+
+            <div class="animate-fade-in-up delay-300"
+                style="display: flex; gap: 1.5rem; justify-content: center; opacity: 0; animation-fill-mode: forwards;">
+                <a href="create.html" class="btn-gold"
+                    style="display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+                    <i class="fas fa-magic"></i>
+                    开始创作
+                </a>
+                <button class="btn-outline-gold" style="display: inline-flex; align-items: center; gap: 0.75rem;">
+                    <i class="fas fa-play-circle"></i>
+                    观看演示
+                </button>
+            </div>
+
+            <!-- 数据展示 -->
+            <div class="animate-fade-in-up delay-400"
+                style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; max-width: 800px; margin: 5rem auto 0; opacity: 0; animation-fill-mode: forwards;">
+                <div style="text-align: center;">
+                    <div class="title-gold" style="font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem;">50K+</div>
+                    <div style="color: var(--text-muted); font-size: 0.95rem;">生成照片</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="title-gold" style="font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem;">10K+</div>
+                    <div style="color: var(--text-muted); font-size: 0.95rem;">满意客户</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="title-gold" style="font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem;">4.9</div>
+                    <div style="color: var(--text-muted); font-size: 0.95rem;">客户评分</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 滚动提示 -->
+        <div
+            style="position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite;">
+            <i class="fas fa-chevron-down" style="color: var(--gold-primary); font-size: 2rem;"></i>
+        </div>
+    </section>
+
+    <!-- 服务流程 -->
+    <section class="section-spacing" style="background: var(--bg-secondary);">
+        <div class="container-studio">
+            <div style="text-align: center; margin-bottom: 5rem;">
+                <h2 class="title-elegant" style="font-size: 3.5rem; margin-bottom: 1rem;">
+                    简单 <span class="title-gold">四步</span>，创造精彩
+                </h2>
+                <p class="subtitle-elegant">专业流程，极致体验</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                <!-- 步骤 1 -->
+                <div class="studio-card" style="text-align: center;">
+                    <div
+                        style="width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 50%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);">
+                        <i class="fas fa-upload" style="font-size: 2rem; color: var(--bg-primary);"></i>
+                    </div>
+                    <h3 class="title-elegant"
+                        style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--gold-primary);">01. 上传照片</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">上传您的个人照片<br>正面、侧面、全身</p>
+                </div>
+
+                <!-- 步骤 2 -->
+                <div class="studio-card" style="text-align: center;">
+                    <div
+                        style="width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 50%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);">
+                        <i class="fas fa-palette" style="font-size: 2rem; color: var(--bg-primary);"></i>
+                    </div>
+                    <h3 class="title-elegant"
+                        style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--gold-primary);">02. 选择场景</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">从 12+ 种精选场景<br>中选择您的风格</p>
+                </div>
+
+                <!-- 步骤 3 -->
+                <div class="studio-card" style="text-align: center;">
+                    <div
+                        style="width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 50%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);">
+                        <i class="fas fa-wand-magic-sparkles" style="font-size: 2rem; color: var(--bg-primary);"></i>
+                    </div>
+                    <h3 class="title-elegant"
+                        style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--gold-primary);">03. AI 生成</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">强大 AI 算法<br>30 秒完成创作</p>
+                </div>
+
+                <!-- 步骤 4 -->
+                <div class="studio-card" style="text-align: center;">
+                    <div
+                        style="width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 50%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-light)); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);">
+                        <i class="fas fa-download" style="font-size: 2rem; color: var(--bg-primary);"></i>
+                    </div>
+                    <h3 class="title-elegant"
+                        style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--gold-primary);">04. 下载分享</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">高清下载<br>一键分享社交媒体</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 照片墙 -->
+    <section class="section-spacing" style="background: var(--bg-primary);">
+        <div class="container-studio">
+            <div style="text-align: center; margin-bottom: 5rem;">
+                <h2 class="title-elegant" style="font-size: 3.5rem; margin-bottom: 1rem;">
+                    <span class="title-gold">精选</span> 作品展示
+                </h2>
+                <p class="subtitle-elegant">客户的精彩瞬间，AI 的完美呈现</p>
+            </div>
+
+            <div class="photo-wall">
+                <!-- 照片 1 - 攀岩 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600&h=800&fit=crop"
+                        alt="攀岩场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">征服巅峰</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-mountain"></i>
+                            攀岩挑战
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 2 - 冲浪 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=600&h=800&fit=crop"
+                        alt="冲浪场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">乘风破浪</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-water"></i>
+                            冲浪激情
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 3 - 赛车 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&h=800&fit=crop"
+                        alt="赛车场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">速度与激情</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-flag-checkered"></i>
+                            赛车竞速
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 4 - 旅行 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=800&fit=crop"
+                        alt="旅行场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">环游世界</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-plane"></i>
+                            旅行探险
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 5 - 音乐会 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=800&fit=crop"
+                        alt="音乐会场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">音乐狂欢</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-music"></i>
+                            音乐会
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 6 - 美食 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=800&fit=crop"
+                        alt="美食场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">美食之旅</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-utensils"></i>
+                            美食体验
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 7 - 滑雪 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=800&fit=crop"
+                        alt="滑雪场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">雪山飞驰</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-snowflake"></i>
+                            滑雪运动
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 8 - 健身 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=800&fit=crop"
+                        alt="健身场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">力量之美</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-dumbbell"></i>
+                            健身运动
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 9 - 商务 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&h=800&fit=crop"
+                        alt="商务场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">商务精英</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-briefcase"></i>
+                            职业形象
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 10 - 艺术 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=800&fit=crop"
+                        alt="艺术场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">艺术创作</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-paint-brush"></i>
+                            艺术家
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 11 - 时尚 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop"
+                        alt="时尚场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">时尚潮流</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-tshirt"></i>
+                            时尚大片
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 照片 12 - 沙漠 -->
+                <div class="photo-wall-item glow-gold-hover">
+                    <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&h=800&fit=crop"
+                        alt="沙漠场景">
+                    <div class="photo-wall-overlay">
+                        <div class="photo-wall-title">沙漠探险</div>
+                        <div class="photo-wall-category">
+                            <i class="fas fa-sun"></i>
+                            沙漠之旅
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客户评价 -->
+    <section class="section-spacing" style="background: var(--bg-secondary);">
+        <div class="container-studio">
+            <div style="text-align: center; margin-bottom: 5rem;">
+                <h2 class="title-elegant" style="font-size: 3.5rem; margin-bottom: 1rem;">
+                    客户 <span class="title-gold">评价</span>
+                </h2>
+                <p class="subtitle-elegant">听听他们的真实体验</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                <!-- 评价 1 -->
+                <div class="studio-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+                            alt="客户头像"
+                            style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold-primary);">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">张先生</div>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); line-height: 1.8; font-style: italic;">
+                        "效果超出预期！生成的攀岩照片非常逼真，朋友们都以为我真的去爬山了。专业的服务，值得推荐！"
+                    </p>
+                </div>
+
+                <!-- 评价 2 -->
+                <div class="studio-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face"
+                            alt="客户头像"
+                            style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold-primary);">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">李女士</div>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); line-height: 1.8; font-style: italic;">
+                        "操作简单，生成速度快，照片质量高。作为社交媒体运营者，这个工具帮我节省了大量时间和成本。"
+                    </p>
+                </div>
+
+                <!-- 评价 3 -->
+                <div class="studio-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face"
+                            alt="客户头像"
+                            style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold-primary);">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">王先生</div>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                                <i class="fas fa-star" style="color: var(--gold-primary);"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); line-height: 1.8; font-style: italic;">
+                        "AI 技术真的太强大了！生成的照片细节丰富，光影自然。这是我用过最好的 AI 摄影服务。"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-spacing photo-studio-bg"
+        style="background-image: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&h=600&fit=crop'); position: relative;">
+        <div class="container-studio" style="position: relative; z-index: 10; text-align: center;">
+            <div class="floating-card glow-gold" style="max-width: 900px; margin: 0 auto; padding: 4rem;">
+                <h2 class="title-elegant" style="font-size: 3rem; margin-bottom: 1.5rem;">
+                    准备好创造你的<span class="title-gold">专属瞬间</span>了吗？
+                </h2>
+                <p class="subtitle-elegant" style="margin-bottom: 2.5rem;">
+                    加入数万用户，开启你的 AI 摄影创作之旅
+                </p>
+                <a href="create.html" class="btn-gold"
+                    style="display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; font-size: 1.125rem;">
+                    <i class="fas fa-rocket"></i>
+                    立即开始免费试用
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+    </style>
+</body>
+
+</html>

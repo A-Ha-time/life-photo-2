@@ -1,0 +1,193 @@
+{
+  "Nav": {
+    "home": "Home",
+    "create": "Create",
+    "profile": "Profile",
+    "privacy": "Privacy & Terms",
+    "cta": "Start Creating"
+  },
+  "Language": {
+    "label": "Language",
+    "en": "English",
+    "zh": "中文",
+    "ko": "한국어",
+    "ja": "日本語"
+  },
+  "Home": {
+    "badge": "AI-powered professional photography generation",
+    "titleLine1": "Reimagine your",
+    "titleLine2": "Best Moments",
+    "subtitle": "A premium AI photo studio that creates climbing, surfing, racing and more — made for sharing.",
+    "ctaPrimary": "Start Creating",
+    "ctaSecondary": "Watch Demo",
+    "statPhotos": "Photos generated",
+    "statUsers": "Happy customers",
+    "statRating": "User rating",
+    "flowTitle1": "How it",
+    "flowTitle2": "Works",
+    "flowSubtitle": "Upload. Pick a scene. Generate. Share.",
+    "step1Title": "Upload",
+    "step1Desc": "Upload a clear frontal photo",
+    "step2Title": "Choose a scene",
+    "step2Desc": "Pick from 12+ curated styles",
+    "step3Title": "Generate",
+    "step3Desc": "AI creates in about 30 seconds",
+    "step4Title": "Download & Share",
+    "step4Desc": "HD download and one-tap sharing",
+    "galleryTitle1": "Featured",
+    "galleryTitle2": "Gallery",
+    "gallerySubtitle": "Realistic moments — crafted by AI.",
+    "galleryItem1Title": "Summit Ready",
+    "galleryItem1Cat": "Climbing",
+    "galleryItem2Title": "Ride the Wave",
+    "galleryItem2Cat": "Surfing",
+    "galleryItem3Title": "Speed Rush",
+    "galleryItem3Cat": "Racing",
+    "galleryItem4Title": "Powder Day",
+    "galleryItem4Cat": "Skiing",
+    "galleryItem5Title": "World Trip",
+    "galleryItem5Cat": "Travel",
+    "galleryItem6Title": "Street Style",
+    "galleryItem6Cat": "Fashion",
+    "testimonialsTitle1": "Loved by",
+    "testimonialsTitle2": "Creators",
+    "testimonialsSubtitle": "What our users say.",
+    "review1Name": "Ms. Li",
+    "review1Text": "The result looks incredibly real — lighting and details are on point. Perfect for social media!",
+    "review2Name": "Mr. Zhang",
+    "review2Text": "Super easy workflow. Upload once, then try multiple scenes. Great consistency.",
+    "review3Name": "Mr. Wang",
+    "review3Text": "The AI is impressive — rich details and natural light. Best AI photo service I've used.",
+    "ctaTitle1": "Ready to create your ",
+    "ctaTitle2": "signature moment",
+    "ctaTitle3": "?",
+    "ctaSubtitle": "Join tens of thousands of users and start creating today.",
+    "ctaButton": "Start Free Trial"
+  },
+  "Create": {
+    "title1": "Creation",
+    "title2": "Studio",
+    "subtitle": "Upload your photo, pick a scene, generate your masterpiece.",
+    "uploads": {
+      "title": "Upload Photos",
+      "front": "Frontal photo",
+      "side": "Side photo",
+      "full": "Full-body photo",
+      "clickOrDrop": "Click or drag & drop to upload",
+      "remove": "Remove",
+      "tip": "Your last upload is kept on this device"
+    },
+    "scenes": {
+      "title": "Choose a Scene"
+    },
+    "refs": {
+      "title": "Reference Images",
+      "optional": "(optional)",
+      "desc": "Upload references to help the AI understand the style",
+      "count": "{count} uploaded"
+    },
+    "settings": {
+      "title": "Advanced Settings",
+      "customPrompt": "Custom prompt",
+      "customPromptPlaceholder": "Describe the look you want (e.g. sunny, professional photography, ultra realistic)",
+      "size": "Size",
+      "quality": "Quality",
+      "qualityStandard": "Standard",
+      "qualityHd": "HD",
+      "qualityUhd": "Ultra HD (extra cost)"
+    },
+    "generate": {
+      "start": "Generate",
+      "generating": "Generating…",
+      "hint": "Upload a frontal photo and choose a scene first",
+      "ready": "Ready to generate",
+      "eta": "ETA {eta}"
+    },
+    "preview": {
+      "title": "Preview",
+      "empty": "Your generated photo will appear here",
+      "waiting": "Generating… waiting for results",
+      "download": "Download",
+      "share": "Share",
+      "thumb": "Result {index}",
+      "meta": "Status: {status} · {size} · {quality}",
+      "statusLine": "Status: {status} · {progress}%"
+    },
+    "share": {
+      "copied": "Link copied",
+      "copyFailed": "Copy failed"
+    },
+    "errors": {
+      "unknown": "Something went wrong"
+    }
+  },
+  "Profile": {
+    "avatarAlt": "Avatar",
+    "editAvatar": "Edit avatar",
+    "emailPlaceholder": "No email set",
+    "badgePro": "Pro member",
+    "badgeStreak": "7-day streak",
+    "statImages": "Generated",
+    "statFavorites": "Favorites",
+    "statLikes": "Likes",
+    "tabWorks": "My works",
+    "tabFavorites": "Favorites",
+    "tabHistory": "History",
+    "tabStats": "Analytics",
+    "comingSoon": "Coming soon",
+    "loading": "Loading…",
+    "empty": "No items yet. Create your first photo in the Creation Studio.",
+    "workAlt": "Generated work",
+    "actions": {
+      "download": "Download",
+      "share": "Share",
+      "delete": "Delete",
+      "favorite": "Favorite"
+    },
+    "dialogs": {
+      "confirmDelete": "Delete this image?"
+    },
+    "share": {
+      "copied": "Link copied",
+      "copyFailed": "Copy failed"
+    }
+  },
+  "Privacy": {
+    "title1": "Privacy",
+    "title2": "Terms",
+    "subtitle": "We protect your privacy and provide high-quality service.",
+    "lastUpdated": "Last updated: 2025-12-09",
+    "privacyTitle": "Privacy Policy",
+    "p1Title": "1. Information we collect",
+    "p1Items": [
+      "Photos you upload (frontal, side, full-body, reference images)",
+      "Basic profile information (e.g. display name, email if provided)",
+      "Generation history and preferences",
+      "Usage and analytics information"
+    ],
+    "p2Title": "2. How we use information",
+    "p2Items": [
+      "To provide AI photo generation",
+      "To improve model quality and user experience",
+      "To personalize your experience",
+      "To send service notifications"
+    ],
+    "p3Title": "3. Data security",
+    "p3Items": ["Encrypted transport (TLS)", "Access control", "Security reviews"],
+    "termsTitle": "Terms of Service",
+    "t1Title": "1. Service description",
+    "t1Text": "LUMINA STUDIO provides AI-powered photo generation for creating personalized social media images.",
+    "t2Title": "2. User responsibilities",
+    "t2Items": [
+      "You must have the right to use the photos you upload",
+      "Do not upload illegal or infringing content",
+      "Do not abuse the service"
+    ],
+    "t3Title": "3. Intellectual property",
+    "t3Text": "You have usage rights for generated photos. We retain rights to the underlying technology and algorithms.",
+    "t4Title": "4. Service limitations",
+    "t4Items": ["We may suspend abusive accounts", "We may adjust quotas and limits", "We may update the service"],
+    "contactTitle": "Contact us",
+    "contactSubtitle": "If you have any questions, please reach out."
+  }
+}
