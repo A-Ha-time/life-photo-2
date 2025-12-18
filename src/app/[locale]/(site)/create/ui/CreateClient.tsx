@@ -44,11 +44,11 @@ async function uploadImage(kind: 'front' | 'side' | 'full' | 'ref', file: File):
     return {resp, data};
   };
 
-  // 某些部署环境可能把 `/api/uploads` 误判为不可用（返回 404）。
-  // 为了保证可用性，增加一个别名端点 `/api/upload` 作为兜底。
-  let {resp, data} = await tryOnce('/api/uploads');
+  // 为了兼容存在路由冲突/重写的部署环境，优先使用别名端点 `/api/upload`，
+  // 并在其不存在时回退到 `/api/uploads`。
+  let {resp, data} = await tryOnce('/api/upload');
   if (resp.status === 404) {
-    ({resp, data} = await tryOnce('/api/upload'));
+    ({resp, data} = await tryOnce('/api/uploads'));
   }
   if (!resp.ok) throw new Error(data?.error || '上传失败');
   return data as UploadResult;
