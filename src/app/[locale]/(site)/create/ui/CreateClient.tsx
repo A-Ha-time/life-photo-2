@@ -38,8 +38,18 @@ async function uploadImage(kind: 'front' | 'side' | 'full' | 'ref', file: File):
   form.set('kind', kind);
   form.set('file', file);
 
-  const resp = await fetch('/api/uploads', {method: 'POST', body: form});
-  const data = await resp.json().catch(() => null);
+  const tryOnce = async (path: string) => {
+    const resp = await fetch(path, {method: 'POST', body: form});
+    const data = await resp.json().catch(() => null);
+    return {resp, data};
+  };
+
+  // 某些部署环境可能把 `/api/uploads` 误判为不可用（返回 404）。
+  // 为了保证可用性，增加一个别名端点 `/api/upload` 作为兜底。
+  let {resp, data} = await tryOnce('/api/uploads');
+  if (resp.status === 404) {
+    ({resp, data} = await tryOnce('/api/upload'));
+  }
   if (!resp.ok) throw new Error(data?.error || '上传失败');
   return data as UploadResult;
 }
