@@ -8,5 +8,5 @@ dist
 .env
 .env.*
 
-uploads
+/uploads
 data
