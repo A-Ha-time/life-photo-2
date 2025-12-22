@@ -47,12 +47,12 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: Request) {
-  const userId = await getUserId();
-  if (!userId) {
-    return NextResponse.json({error: '缺少用户标识（uid）'}, {status: 401});
-  }
-
   try {
+    const userId = await getUserId();
+    if (!userId) {
+      return NextResponse.json({error: '缺少用户标识（uid）'}, {status: 401});
+    }
+
     if (!process.env.BLOB_READ_WRITE_TOKEN) {
       return NextResponse.json(
         {error: '未配置 BLOB_READ_WRITE_TOKEN（请在 Vercel Storage→Blob 启用并注入环境变量）'},
