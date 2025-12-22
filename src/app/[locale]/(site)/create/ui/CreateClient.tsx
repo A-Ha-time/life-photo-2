@@ -112,6 +112,7 @@ export function CreateClient() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [eta, setEta] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [zoomUrl, setZoomUrl] = useState<string | null>(null);
 
   const pollingRef = useRef<number | null>(null);
 
@@ -594,7 +595,13 @@ export function CreateClient() {
                 {previewUrl ? (
                   <>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={previewUrl} alt="Preview" className="preview-image" style={{maxHeight: 260}} />
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className="preview-image"
+                      style={{maxHeight: 260, cursor: 'zoom-in'}}
+                      onClick={() => setZoomUrl(previewUrl)}
+                    />
 
                     <div style={{display: 'flex', gap: '0.75rem', width: '100%', justifyContent: 'center'}}>
                       <a
@@ -665,6 +672,18 @@ export function CreateClient() {
         </div>
       </div>
 
+      {zoomUrl ? (
+        <div className="lightbox" role="dialog" aria-label="Image preview" onClick={() => setZoomUrl(null)}>
+          <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" type="button" onClick={() => setZoomUrl(null)} aria-label="Close">
+              ×
+            </button>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={zoomUrl} alt="Preview large" />
+          </div>
+        </div>
+      ) : null}
+
       <style>{`
         .upload-slot {
           border: 2px dashed var(--border-gold);
@@ -723,6 +742,42 @@ export function CreateClient() {
           height: 100%;
           object-fit: contain;
           border-radius: 12px;
+        }
+        .lightbox {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.75);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          padding: 1rem;
+        }
+        .lightbox-inner {
+          position: relative;
+          max-width: 90vw;
+          max-height: 90vh;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        .lightbox-inner img {
+          max-width: 100%;
+          max-height: 90vh;
+          display: block;
+          border-radius: 8px;
+        }
+        .lightbox-close {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: none;
+          background: rgba(0,0,0,0.7);
+          color: #fff;
+          font-size: 20px;
+          cursor: pointer;
+          line-height: 32px;
         }
       `}</style>
     </main>

@@ -51,8 +51,9 @@ function buildPrompt({sceneHint, customPrompt}: {sceneHint: string; customPrompt
   const identity = [
     'Strictly keep the same person identity as the reference photos:',
     '- same face shape and facial features (eyes, nose, mouth, jawline, eyebrows).',
-    '- same hairstyle and hair length/color.',
-    '- same skin tone and body build/proportions.',
+    '- same hairstyle, hair length and hair color.',
+    '- same skin tone, body build, and proportions.',
+    '- keep the clothing style/colors consistent with the main reference when possible.',
     '- do not change ethnicity, age, or gender.',
     'Do not introduce a different person.'
   ].join(' ');
@@ -120,8 +121,13 @@ export async function POST(request: Request) {
   }
 
   // Evolink 文档：最多传入 5 张真人图像。这里保守限制“用户上传图”最多 5 张（front/side/full/ref）。
-  const userImageUrls = [frontUrl, ...(sideUrl ? [sideUrl] : []), ...(fullUrl ? [fullUrl] : []), ...refUrls].slice(0, 5);
-  // 将用户图像放在最前面，场景图作为辅助参考，提升身份一致性
+  // 强化主体一致性：优先使用用户照片，数量不足时重复主图提高权重
+  const personImages = [frontUrl, ...(sideUrl ? [sideUrl] : []), ...(fullUrl ? [fullUrl] : []), ...refUrls];
+  while (personImages.length < 3 && personImages.length < 5) {
+    personImages.push(frontUrl);
+  }
+  const userImageUrls = personImages.slice(0, 5);
+  // 将用户图像放在最前面，场景图作为辅助参考
   const image_urls = [...userImageUrls, scene.coverImageUrl].slice(0, 10);
 
   const size = mapSizePresetToRatio(parsed.data.sizePreset);
