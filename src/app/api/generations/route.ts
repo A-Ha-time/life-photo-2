@@ -55,15 +55,20 @@ function buildPrompt({sceneHint, customPrompt}: {sceneHint: string; customPrompt
     '- same skin tone, body build, and proportions.',
     '- keep the clothing style/colors consistent with the main reference when possible.',
     '- do not change ethnicity, age, or gender.',
-    'Do not introduce a different person.'
+    'Do not introduce a different person. No face swap. No new identity.'
   ].join(' ');
 
   const quality = [
-    'Photorealistic, natural skin texture, realistic lighting and shadows, professional photography.',
+    'Photorealistic and natural: true skin texture, natural hair flow, realistic fabric folds, lighting and shadows matching the environment.',
+    'Pose and facial expression must fit the scene/action naturally (e.g., surfing -> dynamic action, balanced stance, appropriate gaze).',
     'No cartoon, no painting, no plastic skin, no extra limbs, no distorted face, no watermark, no text.'
   ].join(' ');
 
-  const scene = `Scene: ${sceneHint}.`;
+  const scene = [
+    `Scene: ${sceneHint}.`,
+    'Use the scene only for background, environment, lighting and color mood.',
+    'Do NOT use any faces or people from the scene reference; the only person must be from the user photos.'
+  ].join(' ');
   const extra = customPrompt ? `User request: ${customPrompt}` : '';
 
   return [identity, quality, scene, extra].filter(Boolean).join(' ');
@@ -123,7 +128,7 @@ export async function POST(request: Request) {
   // Evolink 文档：最多传入 5 张真人图像。这里保守限制“用户上传图”最多 5 张（front/side/full/ref）。
   // 强化主体一致性：优先使用用户照片，数量不足时重复主图提高权重
   const personImages = [frontUrl, ...(sideUrl ? [sideUrl] : []), ...(fullUrl ? [fullUrl] : []), ...refUrls];
-  while (personImages.length < 3 && personImages.length < 5) {
+  while (personImages.length < 5) {
     personImages.push(frontUrl);
   }
   const userImageUrls = personImages.slice(0, 5);
