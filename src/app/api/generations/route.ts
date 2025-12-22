@@ -57,7 +57,7 @@ function buildPrompt({sceneHint, customPrompt}: {sceneHint: string; customPrompt
     '- same face shape and facial features (eyes, nose, mouth, jawline, eyebrows).',
     '- same hairstyle, hair length and hair color.',
     '- same skin tone, body build, and proportions.',
-    '- keep the clothing style/colors consistent with the main reference when possible.',
+    '- clothing can adapt to the scene (gear/outfit that fits the environment) while keeping the same person.',
     '- do not change ethnicity, age, or gender.',
     'Do not introduce a different person. No face swap. No new identity.'
   ].join(' ');

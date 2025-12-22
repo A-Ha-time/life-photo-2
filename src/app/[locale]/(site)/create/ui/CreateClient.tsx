@@ -102,7 +102,12 @@ export function CreateClient() {
   const [sizePreset, setSizePreset] = useState<'1:1' | '2:3' | '3:4' | '4:3' | '9:16' | '16:9'>('3:4');
   const [qualityPreset, setQualityPreset] = useState<'standard' | 'hd' | 'uhd'>('hd');
 
-  const [isUploading, setIsUploading] = useState(false);
+  const [uploading, setUploading] = useState<{front: boolean; side: boolean; full: boolean; refs: boolean}>({
+    front: false,
+    side: false,
+    full: false,
+    refs: false
+  });
   const [isGenerating, setIsGenerating] = useState(false);
   const [taskId, setTaskId] = useState<string | null>(null);
   const [task, setTask] = useState<Task | null>(null);
@@ -114,7 +119,8 @@ export function CreateClient() {
 
   const pollingRef = useRef<number | null>(null);
 
-  const canGenerate = Boolean(front?.id && selectedSceneId && !isUploading && !isGenerating);
+  const isAnyUploading = uploading.front || uploading.side || uploading.full || uploading.refs;
+  const canGenerate = Boolean(front?.id && selectedSceneId && !isAnyUploading && !isGenerating);
 
   const selectedScene = useMemo(() => {
     if (!selectedSceneId) return null;
@@ -133,7 +139,7 @@ export function CreateClient() {
 
   async function setUpload(kind: 'front' | 'side' | 'full', file: File) {
     setError(null);
-    setIsUploading(true);
+    setUploading((prev) => ({...prev, [kind]: true}));
     try {
       const localPreviewUrl = URL.createObjectURL(file);
       const result = await uploadImage(kind, file);
@@ -155,14 +161,14 @@ export function CreateClient() {
     } catch (e) {
       setError(e instanceof Error ? e.message : t('errors.unknown'));
     } finally {
-      setIsUploading(false);
+      setUploading((prev) => ({...prev, [kind]: false}));
     }
   }
 
   async function addRefs(files: FileList | null) {
     if (!files || files.length === 0) return;
     setError(null);
-    setIsUploading(true);
+    setUploading((prev) => ({...prev, refs: true}));
     try {
       const next: UploadedImage[] = [];
       for (const file of Array.from(files).slice(0, 3)) {
@@ -174,7 +180,7 @@ export function CreateClient() {
     } catch (e) {
       setError(e instanceof Error ? e.message : t('errors.unknown'));
     } finally {
-      setIsUploading(false);
+      setUploading((prev) => ({...prev, refs: false}));
     }
   }
 
@@ -304,7 +310,7 @@ export function CreateClient() {
               title={t('uploads.front')}
               icon="fa-user"
               uploaded={front}
-              disabled={isUploading || isGenerating}
+              disabled={uploading.front || isGenerating}
               hintText={t('uploads.clickOrDrop')}
               removeLabel={t('uploads.remove')}
               onPick={(file) => setUpload('front', file)}
@@ -319,7 +325,7 @@ export function CreateClient() {
               title={t('uploads.side')}
               icon="fa-user-circle"
               uploaded={side}
-              disabled={isUploading || isGenerating}
+              disabled={uploading.side || isGenerating}
               hintText={t('uploads.clickOrDrop')}
               removeLabel={t('uploads.remove')}
               onPick={(file) => setUpload('side', file)}
@@ -334,7 +340,7 @@ export function CreateClient() {
               title={t('uploads.full')}
               icon="fa-male"
               uploaded={full}
-              disabled={isUploading || isGenerating}
+              disabled={uploading.full || isGenerating}
               hintText={t('uploads.clickOrDrop')}
               removeLabel={t('uploads.remove')}
               onPick={(file) => setUpload('full', file)}
@@ -435,13 +441,16 @@ export function CreateClient() {
                 </span>
               </h3>
 
-              <label className="upload-slot" style={{padding: '1.5rem', display: 'block', cursor: isUploading ? 'wait' : 'pointer'}}>
+              <label
+                className="upload-slot"
+                style={{padding: '1.5rem', display: 'block', cursor: uploading.refs ? 'wait' : 'pointer'}}
+              >
                 <input
                   type="file"
                   accept="image/*"
                   multiple
                   style={{display: 'none'}}
-                  disabled={isUploading || isGenerating}
+                  disabled={uploading.refs || isGenerating}
                   onChange={(e) => addRefs(e.target.files)}
                 />
                 <i className="fas fa-images" style={{fontSize: '1.5rem', color: 'var(--gold-primary)', marginBottom: '0.5rem'}} />
@@ -450,6 +459,20 @@ export function CreateClient() {
                   <p style={{color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.75rem'}}>
                     {t('refs.count', {count: refs.length})}
                   </p>
+                ) : null}
+                {uploading.refs ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(0,0,0,0.35)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <i className="fas fa-spinner fa-spin" style={{color: 'var(--gold-primary)', fontSize: '1.5rem'}} />
+                  </div>
                 ) : null}
               </label>
             </div>
@@ -890,6 +913,20 @@ function UploadSlot({
             <p style={{color: 'var(--text-muted)', fontSize: '0.875rem'}}>{hintText}</p>
           </>
         )}
+        {disabled ? (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.35)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <i className="fas fa-spinner fa-spin" style={{color: 'var(--gold-primary)', fontSize: '1.5rem'}} />
+          </div>
+        ) : null}
       </div>
     </div>
   );
