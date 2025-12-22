@@ -1,6 +1,51 @@
-import {sql} from '@vercel/postgres';
+import {Pool} from 'pg';
 
 let didInit = false;
+let pool: Pool | null = null;
+
+function getConnectionString() {
+  const cs =
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_PRISMA_URL ||
+    process.env.PRISMA_DATABASE_URL;
+  if (!cs) {
+    throw new Error(
+      'Missing Postgres connection string. Please set POSTGRES_URL (or DATABASE_URL/PRISMA_DATABASE_URL) to a pooled connection string.'
+    );
+  }
+  return cs;
+}
+
+function getPool() {
+  if (!pool) {
+    pool = new Pool({
+      connectionString: getConnectionString(),
+      max: 5,
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 10_000,
+      ssl: {rejectUnauthorized: false}
+    });
+  }
+  return pool;
+}
+
+type SqlResult<T = any> = {rows: T[]};
+
+export async function sql<T = any>(
+  strings: TemplateStringsArray,
+  ...values: any[]
+): Promise<SqlResult<T>> {
+  let text = '';
+  for (let i = 0; i < strings.length; i++) {
+    text += strings[i];
+    if (i < values.length) {
+      text += `$${i + 1}`;
+    }
+  }
+  const result = await getPool().query(text, values);
+  return {rows: result.rows as T[]};
+}
 
 export async function ensureSchema() {
   if (didInit) return;
@@ -84,5 +129,3 @@ export async function ensureSchema() {
 
   didInit = true;
 }
-
-export {sql};
