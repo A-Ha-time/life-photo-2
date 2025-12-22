@@ -47,23 +47,25 @@ function mapQualityPresetToApi(qualityPreset: string): '1K' | '2K' | '4K' {
   }
 }
 
-function buildPrompt({
-  sceneHint,
-  customPrompt
-}: {
-  sceneHint: string;
-  customPrompt?: string;
-}) {
-  const base = [
-    'Create a photorealistic social media photo.',
-    'Keep the person identity consistent with the provided reference photo(s): same face, same key facial features.',
-    'High realism, natural skin texture, realistic lighting, realistic shadows, professional photography.',
+function buildPrompt({sceneHint, customPrompt}: {sceneHint: string; customPrompt?: string}) {
+  const identity = [
+    'Strictly keep the same person identity as the reference photos:',
+    '- same face shape and facial features (eyes, nose, mouth, jawline, eyebrows).',
+    '- same hairstyle and hair length/color.',
+    '- same skin tone and body build/proportions.',
+    '- do not change ethnicity, age, or gender.',
+    'Do not introduce a different person.'
+  ].join(' ');
+
+  const quality = [
+    'Photorealistic, natural skin texture, realistic lighting and shadows, professional photography.',
     'No cartoon, no painting, no plastic skin, no extra limbs, no distorted face, no watermark, no text.'
   ].join(' ');
 
   const scene = `Scene: ${sceneHint}.`;
   const extra = customPrompt ? `User request: ${customPrompt}` : '';
-  return [base, scene, extra].filter(Boolean).join(' ');
+
+  return [identity, quality, scene, extra].filter(Boolean).join(' ');
 }
 
 async function getUploadUrlById(userId: string, uploadId: string) {
@@ -118,11 +120,9 @@ export async function POST(request: Request) {
   }
 
   // Evolink 文档：最多传入 5 张真人图像。这里保守限制“用户上传图”最多 5 张（front/side/full/ref）。
-  const userImageUrls = [frontUrl, ...(sideUrl ? [sideUrl] : []), ...(fullUrl ? [fullUrl] : []), ...refUrls].slice(
-    0,
-    5
-  );
-  const image_urls = [scene.coverImageUrl, ...userImageUrls].slice(0, 10);
+  const userImageUrls = [frontUrl, ...(sideUrl ? [sideUrl] : []), ...(fullUrl ? [fullUrl] : []), ...refUrls].slice(0, 5);
+  // 将用户图像放在最前面，场景图作为辅助参考，提升身份一致性
+  const image_urls = [...userImageUrls, scene.coverImageUrl].slice(0, 10);
 
   const size = mapSizePresetToRatio(parsed.data.sizePreset);
   const quality = mapQualityPresetToApi(parsed.data.qualityPreset);
