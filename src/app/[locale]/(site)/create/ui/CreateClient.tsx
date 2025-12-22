@@ -61,7 +61,7 @@ async function createGeneration(payload: {
   fullUploadId?: string;
   refUploadIds?: string[];
   customPrompt?: string;
-  sizePreset: '1024x1024' | '1024x768' | '768x1024' | '2048x2048';
+  sizePreset: '1:1' | '2:3' | '3:4' | '4:3' | '9:16' | '16:9';
   qualityPreset: 'standard' | 'hd' | 'uhd';
 }) {
   const resp = await fetch('/api/generations', {
@@ -99,9 +99,7 @@ export function CreateClient() {
 
   const [selectedSceneId, setSelectedSceneId] = useState<string | null>(null);
   const [customPrompt, setCustomPrompt] = useState('');
-  const [sizePreset, setSizePreset] = useState<'1024x1024' | '1024x768' | '768x1024' | '2048x2048'>(
-    '1024x1024'
-  );
+  const [sizePreset, setSizePreset] = useState<'1:1' | '2:3' | '3:4' | '4:3' | '9:16' | '16:9'>('3:4');
   const [qualityPreset, setQualityPreset] = useState<'standard' | 'hd' | 'uhd'>('hd');
 
   const [isUploading, setIsUploading] = useState(false);
@@ -167,12 +165,12 @@ export function CreateClient() {
     setIsUploading(true);
     try {
       const next: UploadedImage[] = [];
-      for (const file of Array.from(files).slice(0, 10)) {
+      for (const file of Array.from(files).slice(0, 3)) {
         const localPreviewUrl = URL.createObjectURL(file);
         const result = await uploadImage('ref', file);
         next.push({...result, localPreviewUrl, name: file.name});
       }
-      setRefs((prev) => [...prev, ...next].slice(0, 10));
+      setRefs((prev) => [...prev, ...next].slice(0, 3));
     } catch (e) {
       setError(e instanceof Error ? e.message : t('errors.unknown'));
     } finally {
@@ -502,10 +500,12 @@ export function CreateClient() {
                     onChange={(e) => setSizePreset(e.target.value as any)}
                     disabled={isGenerating}
                   >
-                    <option value="1024x1024">1024x1024</option>
-                    <option value="1024x768">1024x768</option>
-                    <option value="768x1024">768x1024</option>
-                    <option value="2048x2048">2048x2048</option>
+                    <option value="1:1">1:1</option>
+                    <option value="2:3">2:3</option>
+                    <option value="3:4">3:4</option>
+                    <option value="4:3">4:3</option>
+                    <option value="9:16">9:16</option>
+                    <option value="16:9">16:9</option>
                   </select>
                 </div>
                 <div>

@@ -17,19 +17,23 @@ const CreateGenerationSchema = z.object({
   fullUploadId: z.string().optional(),
   refUploadIds: z.array(z.string().min(1)).optional(),
   customPrompt: z.string().max(2000).optional(),
-  sizePreset: z.enum(['1024x1024', '1024x768', '768x1024', '2048x2048']).default('1024x1024'),
+  sizePreset: z.enum(['1:1', '2:3', '3:4', '4:3', '9:16', '16:9']).default('3:4'),
   qualityPreset: z.enum(['standard', 'hd', 'uhd']).default('hd')
 });
 
 function mapSizePresetToRatio(sizePreset: string): string {
   switch (sizePreset) {
-    case '1024x768':
-      return '4:3';
-    case '768x1024':
+    case '2:3':
+      return '2:3';
+    case '3:4':
       return '3:4';
-    case '2048x2048':
-      return '1:1';
-    case '1024x1024':
+    case '4:3':
+      return '4:3';
+    case '9:16':
+      return '9:16';
+    case '16:9':
+      return '16:9';
+    case '1:1':
     default:
       return '1:1';
   }
@@ -125,15 +129,14 @@ export async function POST(request: Request) {
     if (u) refUrls.push(u);
   }
 
-  // Evolink 文档：最多传入 5 张真人图像。这里保守限制“用户上传图”最多 5 张（front/side/full/ref）。
-  // 强化主体一致性：优先使用用户照片，数量不足时重复主图提高权重
-  const personImages = [frontUrl, ...(sideUrl ? [sideUrl] : []), ...(fullUrl ? [fullUrl] : []), ...refUrls];
-  while (personImages.length < 5) {
+  // 用户最多 3 张，优先使用人物图；不足 3 张时重复主图补齐，场景图仅作背景参考
+  const personImagesRaw = [frontUrl, ...(sideUrl ? [sideUrl] : []), ...(fullUrl ? [fullUrl] : []), ...refUrls];
+  const personImages = personImagesRaw.filter(Boolean).slice(0, 3) as string[];
+  while (personImages.length < 3) {
     personImages.push(frontUrl);
   }
-  const userImageUrls = personImages.slice(0, 5);
-  // 将用户图像放在最前面，场景图作为辅助参考
-  const image_urls = [...userImageUrls, scene.coverImageUrl].slice(0, 10);
+  const userImageUrls = personImages.slice(0, 3);
+  const image_urls = [...userImageUrls, scene.coverImageUrl].slice(0, 6);
 
   const size = mapSizePresetToRatio(parsed.data.sizePreset);
   const quality = mapQualityPresetToApi(parsed.data.qualityPreset);
