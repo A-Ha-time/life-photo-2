@@ -17,6 +17,7 @@ const CreateGenerationSchema = z.object({
   fullUploadId: z.string().optional(),
   refUploadIds: z.array(z.string().min(1)).optional(),
   customPrompt: z.string().max(2000).optional(),
+  gender: z.enum(['male', 'female']).default('male'),
   sizePreset: z.enum(['1:1', '2:3', '3:4', '4:3', '9:16', '16:9']).default('3:4'),
   qualityPreset: z.enum(['standard', 'hd', 'uhd']).default('hd')
 });
@@ -51,7 +52,15 @@ function mapQualityPresetToApi(qualityPreset: string): '1K' | '2K' | '4K' {
   }
 }
 
-function buildPrompt({sceneHint, customPrompt}: {sceneHint: string; customPrompt?: string}) {
+function buildPrompt({
+  sceneHint,
+  customPrompt,
+  gender
+}: {
+  sceneHint: string;
+  customPrompt?: string;
+  gender: 'male' | 'female';
+}) {
   const identity = [
     'Strictly keep the same person identity as the reference photos:',
     '- same face shape and facial features (eyes, nose, mouth, jawline, eyebrows).',
@@ -73,9 +82,10 @@ function buildPrompt({sceneHint, customPrompt}: {sceneHint: string; customPrompt
     'Use the scene only for background, environment, lighting and color mood.',
     'Do NOT use any faces or people from the scene reference; the only person must be from the user photos.'
   ].join(' ');
+  const genderHint = `Subject gender: ${gender}. Keep it consistent with the reference photos.`;
   const extra = customPrompt ? `User request: ${customPrompt}` : '';
 
-  return [identity, quality, scene, extra].filter(Boolean).join(' ');
+  return [identity, quality, scene, genderHint, extra].filter(Boolean).join(' ');
 }
 
 async function getUploadUrlById(userId: string, uploadId: string) {
@@ -136,14 +146,16 @@ export async function POST(request: Request) {
     personImages.push(frontUrl);
   }
   const userImageUrls = personImages.slice(0, 3);
-  const image_urls = [...userImageUrls, scene.coverImageUrl].slice(0, 6);
+  const sceneRef = scene.coverImageUrl[parsed.data.gender];
+  const image_urls = [...userImageUrls, sceneRef].slice(0, 6);
 
   const size = mapSizePresetToRatio(parsed.data.sizePreset);
   const quality = mapQualityPresetToApi(parsed.data.qualityPreset);
 
   const prompt = buildPrompt({
     sceneHint: scene.promptHint.en,
-    customPrompt: parsed.data.customPrompt
+    customPrompt: parsed.data.customPrompt,
+    gender: parsed.data.gender
   });
 
   // 回调不是必须，但推荐启用；本地开发请用 ngrok / cloudflared 提供 https 公网域名

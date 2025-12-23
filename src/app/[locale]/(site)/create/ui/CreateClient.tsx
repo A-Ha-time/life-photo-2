@@ -61,6 +61,7 @@ async function createGeneration(payload: {
   fullUploadId?: string;
   refUploadIds?: string[];
   customPrompt?: string;
+  gender: 'male' | 'female';
   sizePreset: '1:1' | '2:3' | '3:4' | '4:3' | '9:16' | '16:9';
   qualityPreset: 'standard' | 'hd' | 'uhd';
 }) {
@@ -101,6 +102,7 @@ export function CreateClient() {
   const [customPrompt, setCustomPrompt] = useState('');
   const [sizePreset, setSizePreset] = useState<'1:1' | '2:3' | '3:4' | '4:3' | '9:16' | '16:9'>('3:4');
   const [qualityPreset, setQualityPreset] = useState<'standard' | 'hd' | 'uhd'>('hd');
+  const [gender, setGender] = useState<'male' | 'female'>('male');
 
   const [uploading, setUploading] = useState<{front: boolean; side: boolean; full: boolean; refs: boolean}>({
     front: false,
@@ -199,6 +201,7 @@ export function CreateClient() {
         fullUploadId: full?.id ?? undefined,
         refUploadIds: refs.map((r) => r.id),
         customPrompt: customPrompt.trim() ? customPrompt.trim() : undefined,
+        gender,
         sizePreset,
         qualityPreset
       });
@@ -376,11 +379,27 @@ export function CreateClient() {
                 marginBottom: '1.5rem',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem'
+                gap: '0.5rem',
+                justifyContent: 'space-between'
               }}
             >
-              <i className="fas fa-palette" />
-              {t('scenes.title')}
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                <i className="fas fa-palette" />
+                {t('scenes.title')}
+              </div>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                <span style={{color: 'var(--text-secondary)', fontSize: '0.875rem'}}>Gender</span>
+                <select
+                  className="input-studio"
+                  style={{fontSize: '0.875rem', padding: '0.5rem 0.75rem', minWidth: 110}}
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value as 'male' | 'female')}
+                  disabled={isGenerating}
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
             </h2>
 
             <div
@@ -408,7 +427,7 @@ export function CreateClient() {
                     }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={scene.coverImageUrl} alt={scene.name[locale]} />
+                    <img src={scene.coverImageUrl[gender]} alt={scene.name[locale]} />
                     <div style={{padding: '0.75rem', background: 'var(--bg-card)'}}>
                       <div style={{fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.875rem'}}>
                         {scene.name[locale]}
