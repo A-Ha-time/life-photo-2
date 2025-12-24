@@ -4,6 +4,7 @@ import {useTranslations} from 'next-intl';
 
 import {Link, usePathname} from '@/i18n/navigation';
 import {LanguageSwitcher} from './LanguageSwitcher';
+import {AuthStatus} from './AuthStatus';
 
 export function Navbar() {
   const t = useTranslations('Nav');
@@ -50,12 +51,9 @@ export function Navbar() {
 
         <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
           <LanguageSwitcher />
-          <Link href="/create" className="navbar-cta">
-            {t('cta')}
-          </Link>
+          <AuthStatus />
         </div>
       </div>
     </nav>
   );
 }
-

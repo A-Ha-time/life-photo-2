@@ -107,6 +107,9 @@ export async function ensureSchema() {
     )
   `;
 
+  await sql`ALTER TABLE generation_tasks ADD COLUMN IF NOT EXISTS credits_cost INTEGER NOT NULL DEFAULT 0`;
+  await sql`ALTER TABLE generation_tasks ADD COLUMN IF NOT EXISTS credits_refunded BOOLEAN NOT NULL DEFAULT FALSE`;
+
   await sql`
     CREATE TABLE IF NOT EXISTS images (
       id TEXT PRIMARY KEY,
@@ -124,6 +127,30 @@ export async function ensureSchema() {
       image_id TEXT NOT NULL REFERENCES images(id) ON DELETE CASCADE,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       PRIMARY KEY (user_id, image_id)
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS user_credits (
+      user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+      balance INTEGER NOT NULL DEFAULT 0,
+      total_earned INTEGER NOT NULL DEFAULT 0,
+      total_spent INTEGER NOT NULL DEFAULT 0,
+      last_daily_grant DATE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS credit_events (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      amount INTEGER NOT NULL,
+      type TEXT NOT NULL,
+      reason TEXT,
+      task_id TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
 

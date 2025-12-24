@@ -13,6 +13,11 @@
     "ko": "한국어",
     "ja": "日本語"
   },
+  "Auth": {
+    "signIn": "ログイン",
+    "signOut": "ログアウト",
+    "credits": "クレジット：{count}"
+  },
   "Home": {
     "badge": "AI 駆動のプロ写真生成",
     "titleLine1": "あなたの",

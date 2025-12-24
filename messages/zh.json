@@ -13,6 +13,11 @@
     "ko": "한국어",
     "ja": "日本語"
   },
+  "Auth": {
+    "signIn": "登录",
+    "signOut": "退出登录",
+    "credits": "积分：{count}"
+  },
   "Home": {
     "badge": "AI 驱动的专业摄影生成",
     "titleLine1": "重塑你的",

@@ -3,6 +3,7 @@ import {NextResponse} from 'next/server';
 import {ensureSchema, sql} from '@/server/db';
 import {getUserId} from '@/server/user';
 import {getEvolinkGenerationEnv} from '@/server/env';
+import {refundCredits} from '@/server/credits';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -14,7 +15,7 @@ export async function GET(_request: Request, {params}: {params: {id: string}}) {
 
   await ensureSchema();
   const taskRes = await sql`
-    SELECT id, scene_id, status, progress, model, size, quality, created_at, updated_at, response_json
+    SELECT id, scene_id, status, progress, model, size, quality, created_at, updated_at, response_json, credits_cost, credits_refunded
     FROM generation_tasks
     WHERE id = ${params.id} AND user_id = ${userId}
     LIMIT 1
@@ -31,6 +32,8 @@ export async function GET(_request: Request, {params}: {params: {id: string}}) {
         created_at: Date;
         updated_at: Date;
         response_json: any;
+        credits_cost: number;
+        credits_refunded: boolean;
       }
     | undefined;
 
@@ -99,8 +102,17 @@ export async function GET(_request: Request, {params}: {params: {id: string}}) {
           }
         }
 
+        if ((status === 'failed' || status === 'cancelled') && !task.credits_refunded && task.credits_cost > 0) {
+          await refundCredits(userId, task.credits_cost, 'generation_refund', task.id);
+          await sql`
+            UPDATE generation_tasks
+            SET credits_refunded = TRUE, updated_at = NOW()
+            WHERE id = ${task.id}
+          `;
+        }
+
         const refreshed = await sql`
-          SELECT id, scene_id, status, progress, model, size, quality, created_at, updated_at, response_json
+          SELECT id, scene_id, status, progress, model, size, quality, created_at, updated_at, response_json, credits_cost, credits_refunded
           FROM generation_tasks
           WHERE id = ${params.id} AND user_id = ${userId}
           LIMIT 1
@@ -110,6 +122,20 @@ export async function GET(_request: Request, {params}: {params: {id: string}}) {
     } catch {
       // 忽略上游刷新失败，仍返回本地缓存状态
     }
+  }
+
+  if (
+    (task.status === 'failed' || task.status === 'cancelled') &&
+    !task.credits_refunded &&
+    task.credits_cost > 0
+  ) {
+    await refundCredits(userId, task.credits_cost, 'generation_refund', task.id);
+    await sql`
+      UPDATE generation_tasks
+      SET credits_refunded = TRUE, updated_at = NOW()
+      WHERE id = ${task.id}
+    `;
+    task.credits_refunded = true;
   }
 
   const imagesRes = await sql`

@@ -13,6 +13,11 @@
     "ko": "한국어",
     "ja": "日本語"
   },
+  "Auth": {
+    "signIn": "로그인",
+    "signOut": "로그아웃",
+    "credits": "크레딧: {count}"
+  },
   "Home": {
     "badge": "AI 기반 프로 사진 생성",
     "titleLine1": "당신의",

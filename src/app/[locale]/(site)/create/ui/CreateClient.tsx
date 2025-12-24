@@ -64,7 +64,7 @@ async function createGeneration(payload: {
   customPrompt?: string;
   gender: 'male' | 'female';
   sizePreset: '1:1' | '2:3' | '3:4' | '4:3' | '9:16' | '16:9';
-  qualityPreset: 'standard' | 'hd' | 'uhd';
+  qualityPreset: 'hd' | 'uhd';
 }) {
   const resp = await fetch('/api/generations', {
     method: 'POST',
@@ -102,7 +102,7 @@ export function CreateClient() {
   const [selectedSceneId, setSelectedSceneId] = useState<string | null>(null);
   const [customPrompt, setCustomPrompt] = useState('');
   const [sizePreset, setSizePreset] = useState<'1:1' | '2:3' | '3:4' | '4:3' | '9:16' | '16:9'>('3:4');
-  const [qualityPreset, setQualityPreset] = useState<'standard' | 'hd' | 'uhd'>('hd');
+  const [qualityPreset, setQualityPreset] = useState<'hd' | 'uhd'>('hd');
   const [gender, setGender] = useState<'male' | 'female'>('male');
 
   const [uploading, setUploading] = useState<{front: boolean; side: boolean; full: boolean; refs: boolean}>({
@@ -558,7 +558,6 @@ export function CreateClient() {
                   <SelectMenu
                     value={qualityPreset}
                     options={[
-                      {value: 'standard', label: t('settings.qualityStandard')},
                       {value: 'hd', label: t('settings.qualityHd')},
                       {value: 'uhd', label: t('settings.qualityUhd')}
                     ]}

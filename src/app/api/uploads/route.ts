@@ -50,7 +50,7 @@ export async function POST(request: Request) {
   try {
     const userId = await getUserId();
     if (!userId) {
-      return NextResponse.json({error: '缺少用户标识（uid）'}, {status: 401});
+      return NextResponse.json({error: '请先登录后再上传照片'}, {status: 401});
     }
 
     if (!process.env.BLOB_READ_WRITE_TOKEN) {

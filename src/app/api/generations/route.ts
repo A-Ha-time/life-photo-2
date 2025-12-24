@@ -5,6 +5,7 @@ import {getEvolinkGenerationEnv, getEvolinkWebhookSecret} from '@/server/env';
 import {getUserId} from '@/server/user';
 import {ensureSchema, sql} from '@/server/db';
 import {getSceneById} from '@/lib/scenes';
+import {getCredits, trySpendCredits, refundCredits, COST_2K, COST_4K} from '@/server/credits';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -19,7 +20,7 @@ const CreateGenerationSchema = z.object({
   customPrompt: z.string().max(2000).optional(),
   gender: z.enum(['male', 'female']).default('male'),
   sizePreset: z.enum(['1:1', '2:3', '3:4', '4:3', '9:16', '16:9']).default('3:4'),
-  qualityPreset: z.enum(['standard', 'hd', 'uhd']).default('hd')
+  qualityPreset: z.enum(['hd', 'uhd']).default('hd')
 });
 
 function mapSizePresetToRatio(sizePreset: string): string {
@@ -97,7 +98,7 @@ async function getUploadUrlById(userId: string, uploadId: string) {
 export async function POST(request: Request) {
   const userId = await getUserId();
   if (!userId) {
-    return NextResponse.json({error: '缺少用户标识（uid）'}, {status: 401});
+    return NextResponse.json({error: '请先登录后再生成照片'}, {status: 401});
   }
 
   const json = await request.json().catch(() => null);
@@ -152,6 +153,8 @@ export async function POST(request: Request) {
   const size = mapSizePresetToRatio(parsed.data.sizePreset);
   const quality = mapQualityPresetToApi(parsed.data.qualityPreset);
 
+  const creditsCost = parsed.data.qualityPreset === 'uhd' ? COST_4K : COST_2K;
+
   const prompt = buildPrompt({
     sceneHint: scene.promptHint.en,
     customPrompt: parsed.data.customPrompt,
@@ -180,28 +183,42 @@ export async function POST(request: Request) {
     ...(callback_url ? {callback_url} : {})
   };
 
-  const resp = await fetch('https://api.evolink.ai/v1/images/generations', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.EVOLINK_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
+  await getCredits(userId);
+  const canSpend = await trySpendCredits(userId, creditsCost, 'generation', null);
+  if (!canSpend) {
+    return NextResponse.json({error: '积分不足，请先获取积分再生成'}, {status: 402});
+  }
+
+  let resp: Response;
+  try {
+    resp = await fetch('https://api.evolink.ai/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.EVOLINK_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+  } catch (e) {
+    await refundCredits(userId, creditsCost, 'generation_failed', null);
+    return NextResponse.json({error: '创建任务失败', details: String(e ?? '')}, {status: 502});
+  }
 
   const data = await resp.json().catch(() => null);
   if (!resp.ok) {
+    await refundCredits(userId, creditsCost, 'generation_failed', null);
     return NextResponse.json({error: '创建任务失败', details: data}, {status: 502});
   }
 
   const taskId = typeof data?.id === 'string' ? (data.id as string) : null;
   if (!taskId) {
+    await refundCredits(userId, creditsCost, 'generation_failed', null);
     return NextResponse.json({error: '返回任务ID异常', details: data}, {status: 502});
   }
 
   await sql`
     INSERT INTO generation_tasks
-      (id, user_id, scene_id, status, progress, model, prompt, size, quality, request_json, response_json)
+      (id, user_id, scene_id, status, progress, model, prompt, size, quality, request_json, response_json, credits_cost)
     VALUES
       (
         ${taskId},
@@ -214,7 +231,8 @@ export async function POST(request: Request) {
         ${size},
         ${quality},
         ${JSON.stringify(body)}::jsonb,
-        ${JSON.stringify(data)}::jsonb
+        ${JSON.stringify(data)}::jsonb,
+        ${creditsCost}
       )
     ON CONFLICT (id) DO UPDATE SET
       user_id = EXCLUDED.user_id,
@@ -227,6 +245,7 @@ export async function POST(request: Request) {
       quality = EXCLUDED.quality,
       request_json = EXCLUDED.request_json,
       response_json = EXCLUDED.response_json,
+      credits_cost = EXCLUDED.credits_cost,
       updated_at = NOW()
   `;
 

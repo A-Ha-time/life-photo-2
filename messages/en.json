@@ -13,6 +13,11 @@
     "ko": "한국어",
     "ja": "日本語"
   },
+  "Auth": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "credits": "Credits: {count}"
+  },
   "Home": {
     "badge": "AI-powered professional photography generation",
     "titleLine1": "Reimagine your",

@@ -2,6 +2,7 @@ import {NextResponse} from 'next/server';
 
 import {ensureSchema, sql} from '@/server/db';
 import {getEvolinkWebhookSecret} from '@/server/env';
+import {refundCredits} from '@/server/credits';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -58,6 +59,24 @@ export async function POST(request: Request) {
         updated_at = NOW()
     WHERE id = ${taskId}
   `;
+
+  if (status === 'failed' || status === 'cancelled') {
+    const refundRes = await sql`
+      SELECT user_id, credits_cost, credits_refunded
+      FROM generation_tasks
+      WHERE id = ${taskId}
+      LIMIT 1
+    `;
+    const row = refundRes.rows[0] as {user_id: string; credits_cost: number; credits_refunded: boolean} | undefined;
+    if (row && row.credits_cost > 0 && !row.credits_refunded) {
+      await refundCredits(row.user_id, row.credits_cost, 'generation_refund', taskId);
+      await sql`
+        UPDATE generation_tasks
+        SET credits_refunded = TRUE, updated_at = NOW()
+        WHERE id = ${taskId}
+      `;
+    }
+  }
 
   if (status === 'completed') {
     const urls = new Set<string>();
