@@ -4,6 +4,92 @@ import {Link} from '@/i18n/navigation';
 
 export default async function HomePage() {
   const t = await getTranslations('Home');
+  const galleryItems = [
+    {
+      img: 'https://images.unsplash.com/photo-1621803458830-50d0c5cbe9e7?w=600&h=800&fit=crop',
+      title: t('galleryItem1Title'),
+      icon: 'fa-mountain',
+      cat: t('galleryItem1Cat'),
+      user: '@liam.rock'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&h=800&fit=crop',
+      title: t('galleryItem1Title'),
+      icon: 'fa-mountain',
+      cat: t('galleryItem1Cat'),
+      user: '@sara.peak'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=600&h=800&fit=crop',
+      title: t('galleryItem2Title'),
+      icon: 'fa-water',
+      cat: t('galleryItem2Cat'),
+      user: '@noah.wave'
+    },
+    {
+      img: 'https://plus.unsplash.com/premium_photo-1672509987970-f6037d93c249?w=600&h=800&fit=crop',
+      title: t('galleryItem2Title'),
+      icon: 'fa-water',
+      cat: t('galleryItem2Cat'),
+      user: '@hana.surf'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1638730558978-18941cc086ad?w=600&h=800&fit=crop',
+      title: t('galleryItem3Title'),
+      icon: 'fa-flag-checkered',
+      cat: t('galleryItem3Cat'),
+      user: '@kai.drive'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=600&h=800&fit=crop',
+      title: t('galleryItem3Title'),
+      icon: 'fa-flag-checkered',
+      cat: t('galleryItem3Cat'),
+      user: '@mia.speed'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1614270262860-f20d4c6ab4f9?w=600&h=800&fit=crop',
+      title: t('galleryItem4Title'),
+      icon: 'fa-snowflake',
+      cat: t('galleryItem4Cat'),
+      user: '@leo.snow'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=800&fit=crop',
+      title: t('galleryItem4Title'),
+      icon: 'fa-snowflake',
+      cat: t('galleryItem4Cat'),
+      user: '@yuna.alps'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1588865220587-cb991cc285d0?w=600&h=800&fit=crop',
+      title: t('galleryItem5Title'),
+      icon: 'fa-plane',
+      cat: t('galleryItem5Cat'),
+      user: '@jun.trip'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=800&fit=crop',
+      title: t('galleryItem5Title'),
+      icon: 'fa-plane',
+      cat: t('galleryItem5Cat'),
+      user: '@luna.roam'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop',
+      title: t('galleryItem6Title'),
+      icon: 'fa-star',
+      cat: t('galleryItem6Cat'),
+      user: '@mila.style'
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop',
+      title: t('galleryItem6Title'),
+      icon: 'fa-star',
+      cat: t('galleryItem6Cat'),
+      user: '@ezra.look'
+    }
+  ];
 
   return (
     <main>
@@ -22,18 +108,6 @@ export default async function HomePage() {
         }}
       >
         <div className="container-studio" style={{position: 'relative', zIndex: 10, textAlign: 'center'}}>
-          <div className="animate-fade-in-up">
-            <div
-              className="inline-flex items-center gap-3 px-6 py-3 floating-card rounded-full mb-8"
-              style={{display: 'inline-flex', alignItems: 'center', gap: '0.75rem'}}
-            >
-              <i className="fas fa-sparkles" style={{color: 'var(--gold-primary)', fontSize: '1.25rem'}} />
-              <span style={{color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 600}}>
-                {t('badge')}
-              </span>
-            </div>
-          </div>
-
           <h1
             className="title-elegant animate-fade-in-up delay-100"
             style={{
@@ -182,44 +256,7 @@ export default async function HomePage() {
           </div>
 
           <div className="photo-wall">
-            {[
-              {
-                img: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600&h=800&fit=crop',
-                title: t('galleryItem1Title'),
-                icon: 'fa-mountain',
-                cat: t('galleryItem1Cat')
-              },
-              {
-                img: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=600&h=800&fit=crop',
-                title: t('galleryItem2Title'),
-                icon: 'fa-water',
-                cat: t('galleryItem2Cat')
-              },
-              {
-                img: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&h=800&fit=crop',
-                title: t('galleryItem3Title'),
-                icon: 'fa-flag-checkered',
-                cat: t('galleryItem3Cat')
-              },
-              {
-                img: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=800&fit=crop',
-                title: t('galleryItem4Title'),
-                icon: 'fa-snowflake',
-                cat: t('galleryItem4Cat')
-              },
-              {
-                img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=800&fit=crop',
-                title: t('galleryItem5Title'),
-                icon: 'fa-plane',
-                cat: t('galleryItem5Cat')
-              },
-              {
-                img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop',
-                title: t('galleryItem6Title'),
-                icon: 'fa-star',
-                cat: t('galleryItem6Cat')
-              }
-            ].map((item, i) => (
+            {galleryItems.map((item, i) => (
               <div className="photo-wall-item glow-gold-hover" key={i}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.img} alt={item.cat} />
@@ -228,6 +265,10 @@ export default async function HomePage() {
                   <div className="photo-wall-category">
                     <i className={`fas ${item.icon}`} />
                     {item.cat}
+                  </div>
+                  <div className="photo-wall-user">
+                    <i className="fas fa-user-circle" />
+                    {item.user}
                   </div>
                 </div>
               </div>
@@ -347,4 +388,3 @@ export default async function HomePage() {
     </main>
   );
 }
-

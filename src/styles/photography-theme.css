@@ -401,6 +401,14 @@ body {
     align-items: center;
     gap: 0.5rem;
 }
+.photo-wall-user {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
 
 /* ========== 输入框系统 ========== */
 .input-studio {
@@ -423,6 +431,47 @@ body {
 
 .input-studio::placeholder {
     color: var(--text-muted);
+}
+.select-menu {
+    position: relative;
+}
+.select-menu-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+.select-menu-trigger i {
+    color: var(--gold-light);
+    font-size: 0.85rem;
+}
+.select-menu-list {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(24, 24, 24, 0.98);
+    border: 1px solid var(--border-gold);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    z-index: 40;
+}
+.select-menu-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    text-align: left;
+    padding: 0.6rem 0.9rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.select-menu-item:hover,
+.select-menu-item.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--gold-light);
 }
 
 /* ========== 徽章系统 ========== */

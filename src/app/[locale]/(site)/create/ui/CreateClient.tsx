@@ -4,6 +4,7 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import {useLocale, useTranslations} from 'next-intl';
 
 import {SCENES} from '@/lib/scenes';
+import {SelectMenu} from '@/components/SelectMenu';
 
 type UploadResult = {
   id: string;
@@ -370,7 +371,7 @@ export function CreateClient() {
           </div>
 
           {/* Middle: scene + refs */}
-          <div className="studio-card">
+          <div className="studio-card" style={{overflow: 'visible'}}>
             <h2
               style={{
                 fontSize: '1.5rem',
@@ -389,16 +390,16 @@ export function CreateClient() {
               </div>
               <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
                 <span style={{color: 'var(--text-secondary)', fontSize: '0.875rem'}}>Gender</span>
-                <select
-                  className="input-studio"
-                  style={{fontSize: '0.875rem', padding: '0.5rem 0.75rem', minWidth: 110}}
+                <SelectMenu
                   value={gender}
-                  onChange={(e) => setGender(e.target.value as 'male' | 'female')}
+                  options={[
+                    {value: 'male', label: locale === 'zh' ? '男性' : locale === 'ko' ? '남성' : locale === 'ja' ? '男性' : 'Male'},
+                    {value: 'female', label: locale === 'zh' ? '女性' : locale === 'ko' ? '여성' : locale === 'ja' ? '女性' : 'Female'}
+                  ]}
+                  onChange={(next) => setGender(next as 'male' | 'female')}
                   disabled={isGenerating}
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
+                  buttonStyle={{fontSize: '0.875rem', padding: '0.5rem 0.75rem', minWidth: 120}}
+                />
               </div>
             </h2>
 
@@ -499,7 +500,7 @@ export function CreateClient() {
 
           {/* Right: settings + preview */}
           <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
-            <div className="studio-card" style={{flex: '0 0 auto'}}>
+            <div className="studio-card" style={{flex: '0 0 auto', overflow: 'visible'}}>
               <h2
                 style={{
                   fontSize: '1.5rem',
@@ -535,36 +536,36 @@ export function CreateClient() {
                   <label style={{display: 'block', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.875rem'}}>
                     {t('settings.size')}
                   </label>
-                  <select
-                    className="input-studio"
-                    style={{fontSize: '0.875rem', padding: '0.75rem 1rem'}}
+                  <SelectMenu
                     value={sizePreset}
-                    onChange={(e) => setSizePreset(e.target.value as any)}
+                    options={[
+                      {value: '1:1', label: '1:1'},
+                      {value: '2:3', label: '2:3'},
+                      {value: '3:4', label: '3:4'},
+                      {value: '4:3', label: '4:3'},
+                      {value: '9:16', label: '9:16'},
+                      {value: '16:9', label: '16:9'}
+                    ]}
+                    onChange={(next) => setSizePreset(next as any)}
                     disabled={isGenerating}
-                  >
-                    <option value="1:1">1:1</option>
-                    <option value="2:3">2:3</option>
-                    <option value="3:4">3:4</option>
-                    <option value="4:3">4:3</option>
-                    <option value="9:16">9:16</option>
-                    <option value="16:9">16:9</option>
-                  </select>
+                    buttonStyle={{fontSize: '0.875rem', padding: '0.75rem 1rem'}}
+                  />
                 </div>
                 <div>
                   <label style={{display: 'block', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.875rem'}}>
                     {t('settings.quality')}
                   </label>
-                  <select
-                    className="input-studio"
-                    style={{fontSize: '0.875rem', padding: '0.75rem 1rem'}}
+                  <SelectMenu
                     value={qualityPreset}
-                    onChange={(e) => setQualityPreset(e.target.value as any)}
+                    options={[
+                      {value: 'standard', label: t('settings.qualityStandard')},
+                      {value: 'hd', label: t('settings.qualityHd')},
+                      {value: 'uhd', label: t('settings.qualityUhd')}
+                    ]}
+                    onChange={(next) => setQualityPreset(next as any)}
                     disabled={isGenerating}
-                  >
-                    <option value="standard">{t('settings.qualityStandard')}</option>
-                    <option value="hd">{t('settings.qualityHd')}</option>
-                    <option value="uhd">{t('settings.qualityUhd')}</option>
-                  </select>
+                    buttonStyle={{fontSize: '0.875rem', padding: '0.75rem 1rem'}}
+                  />
                 </div>
               </div>
 

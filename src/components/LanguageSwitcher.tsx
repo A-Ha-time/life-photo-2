@@ -5,6 +5,7 @@ import {usePathname, useRouter} from '@/i18n/navigation';
 
 import type {AppLocale} from '@/i18n/routing';
 import {routing} from '@/i18n/routing';
+import {SelectMenu} from '@/components/SelectMenu';
 
 export function LanguageSwitcher() {
   const t = useTranslations('Language');
@@ -15,27 +16,26 @@ export function LanguageSwitcher() {
   return (
     <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
       <i className="fas fa-globe" style={{color: 'var(--gold-primary)'}} />
-      <select
-        aria-label={t('label')}
+      <SelectMenu
         value={locale}
-        onChange={(e) => {
-          const nextLocale = e.target.value as AppLocale;
+        options={[
+          {value: 'en', label: t('en')},
+          {value: 'zh', label: t('zh')},
+          {value: 'ko', label: t('ko')},
+          {value: 'ja', label: t('ja')}
+        ]}
+        onChange={(nextValue) => {
+          const nextLocale = nextValue as AppLocale;
           if (!routing.locales.includes(nextLocale)) return;
           router.replace(pathname, {locale: nextLocale});
         }}
-        className="input-studio"
-        style={{
+        buttonStyle={{
           fontSize: '0.875rem',
           padding: '0.5rem 0.75rem',
-          width: 'auto'
+          width: 'auto',
+          minWidth: 120
         }}
-      >
-        <option value="en">{t('en')}</option>
-        <option value="zh">{t('zh')}</option>
-        <option value="ko">{t('ko')}</option>
-        <option value="ja">{t('ja')}</option>
-      </select>
+      />
     </div>
   );
 }
-
