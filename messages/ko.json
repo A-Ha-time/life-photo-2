@@ -123,7 +123,8 @@
       "copyFailed": "복사 실패"
     },
     "errors": {
-      "unknown": "오류가 발생했습니다"
+      "unknown": "오류가 발생했습니다",
+      "loginRequired": "생성 전에 먼저 로그인해주세요"
     }
   },
   "Profile": {

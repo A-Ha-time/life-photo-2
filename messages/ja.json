@@ -123,7 +123,8 @@
       "copyFailed": "コピーに失敗しました"
     },
     "errors": {
-      "unknown": "エラーが発生しました"
+      "unknown": "エラーが発生しました",
+      "loginRequired": "生成するには先にログインしてください"
     }
   },
   "Profile": {

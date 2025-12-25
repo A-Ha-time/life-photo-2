@@ -123,7 +123,8 @@
       "copyFailed": "Copy failed"
     },
     "errors": {
-      "unknown": "Something went wrong"
+      "unknown": "Something went wrong",
+      "loginRequired": "Please sign in before generating photos"
     }
   },
   "Profile": {

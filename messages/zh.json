@@ -123,7 +123,8 @@
       "copyFailed": "复制失败"
     },
     "errors": {
-      "unknown": "发生未知错误"
+      "unknown": "发生未知错误",
+      "loginRequired": "请先登录后再生成照片"
     }
   },
   "Profile": {

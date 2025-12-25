@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useState} from 'react';
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {usePathname} from '@/i18n/navigation';
 
 type AuthState =
@@ -15,8 +15,10 @@ type AuthState =
 
 export function AuthStatus() {
   const t = useTranslations('Auth');
+  const locale = useLocale();
   const pathname = usePathname();
   const [state, setState] = useState<AuthState>({status: 'loading'});
+  const nextPath = pathname === '/' ? `/${locale}` : `/${locale}${pathname}`;
 
   useEffect(() => {
     let cancelled = false;
@@ -53,7 +55,7 @@ export function AuthStatus() {
 
   if (state.status === 'signedOut') {
     return (
-      <a className="btn-outline-gold btn-compact" href={`/api/auth/login?next=${encodeURIComponent(pathname)}`}>
+      <a className="btn-outline-gold btn-compact" href={`/api/auth/login?next=${encodeURIComponent(nextPath)}`}>
         {t('signIn')}
       </a>
     );
@@ -65,7 +67,7 @@ export function AuthStatus() {
         <i className="fas fa-coins" />
         {t('credits', {count: state.credits.balance})}
       </div>
-      <a className="btn-outline-gold btn-compact" href={`/api/auth/logout?next=${encodeURIComponent(pathname)}`}>
+      <a className="btn-outline-gold btn-compact" href={`/api/auth/logout?next=${encodeURIComponent(nextPath)}`}>
         {t('signOut')}
       </a>
     </div>

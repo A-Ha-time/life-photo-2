@@ -119,6 +119,7 @@ export function CreateClient() {
   const [eta, setEta] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [zoomUrl, setZoomUrl] = useState<string | null>(null);
+  const [authStatus, setAuthStatus] = useState<'loading' | 'signedOut' | 'signedIn'>('loading');
 
   const pollingRef = useRef<number | null>(null);
 
@@ -138,6 +139,25 @@ export function CreateClient() {
       if (pollingRef.current) window.clearTimeout(pollingRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadAuth() {
+      try {
+        const resp = await fetch('/api/auth/me', {cache: 'no-store'});
+        const data = await resp.json().catch(() => null);
+        if (cancelled) return;
+        setAuthStatus(data?.user ? 'signedIn' : 'signedOut');
+      } catch {
+        if (!cancelled) setAuthStatus('signedOut');
+      }
+    }
+
+    loadAuth();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function setUpload(kind: 'front' | 'side' | 'full', file: File) {
@@ -188,6 +208,10 @@ export function CreateClient() {
   }
 
   async function onGenerate() {
+    if (authStatus === 'signedOut') {
+      setError(t('errors.loginRequired'));
+      return;
+    }
     if (!front?.id || !selectedSceneId) return;
     setError(null);
     setIsGenerating(true);
