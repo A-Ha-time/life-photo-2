@@ -468,6 +468,117 @@ body {
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
     z-index: 40;
 }
+
+/* ========== Auth Modals & Menus ========== */
+.auth-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 9, 16, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 10000;
+}
+.auth-modal {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(18, 18, 18, 0.98);
+    border: 1px solid var(--border-gold);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+.auth-modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+.auth-modal-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+.auth-modal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem 0;
+    display: grid;
+    gap: 0.5rem;
+}
+.auth-modal-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+.auth-modal-list li::before {
+    content: '•';
+    color: var(--gold-primary);
+    font-size: 1rem;
+    line-height: 1.2;
+}
+.auth-modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+.auth-menu {
+    position: relative;
+}
+.auth-user-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.auth-user-button i {
+    font-size: 0.75rem;
+    color: var(--gold-light);
+}
+.auth-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    min-width: 200px;
+    background: rgba(18, 18, 18, 0.98);
+    border: 1px solid var(--border-gold);
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+}
+.auth-dropdown-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.auth-dropdown-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    word-break: break-all;
+}
+.auth-dropdown-divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: 0.6rem 0;
+}
+.auth-dropdown-link {
+    display: block;
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.auth-dropdown-link:hover {
+    color: var(--gold-primary);
+}
+.auth-credits-button {
+    border: none;
+    cursor: pointer;
+}
 .select-menu-item {
     width: 100%;
     border: none;

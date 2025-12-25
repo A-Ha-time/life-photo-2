@@ -16,7 +16,21 @@
   "Auth": {
     "signIn": "Sign in",
     "signOut": "Sign out",
-    "credits": "Credits: {count}"
+    "credits": "Credits: {count}",
+    "account": "Account",
+    "promo": {
+      "title": "Welcome bonus",
+      "subtitle": "Sign in to unlock your free credits and daily rewards.",
+      "items": ["First sign-in: +30 credits", "Daily sign-in: +10 credits", "2K generation: 3 credits", "4K generation: 9 credits"],
+      "cta": "Sign in to claim",
+      "close": "Not now"
+    },
+    "creditsRules": {
+      "title": "Credits & rewards",
+      "subtitle": "How credits work",
+      "items": ["First sign-in grants 30 credits", "Daily sign-in grants 10 credits", "2K generation costs 3 credits", "4K generation costs 9 credits"],
+      "close": "Got it"
+    }
   },
   "Home": {
     "badge": "AI-powered professional photography generation",
