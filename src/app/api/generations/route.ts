@@ -169,7 +169,7 @@ export async function POST(request: Request) {
   }
   const userImageUrls = personImages.slice(0, 3);
   const sceneRef = scene.coverImageUrl[parsed.data.gender];
-  const image_urls = [...userImageUrls, sceneRef, sceneRef].slice(0, 6);
+  const image_urls = [...userImageUrls, sceneRef].slice(0, 6);
 
   const size = mapSizePresetToRatio(parsed.data.sizePreset);
   const quality = mapQualityPresetToApi(parsed.data.qualityPreset);

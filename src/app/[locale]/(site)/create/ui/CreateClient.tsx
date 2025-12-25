@@ -20,6 +20,19 @@ type UploadedImage = {
   status: 'local' | 'uploaded';
 };
 
+type StoredImage = {
+  id: string;
+  url: string;
+  name: string;
+};
+
+type StoredUploads = {
+  front?: StoredImage;
+  side?: StoredImage;
+  full?: StoredImage;
+  refs?: StoredImage[];
+};
+
 type Task = {
   id: string;
   sceneId: string;
@@ -127,6 +140,7 @@ export function CreateClient() {
   const [zoomUrl, setZoomUrl] = useState<string | null>(null);
   const [loginPromptOpen, setLoginPromptOpen] = useState(false);
   const [authStatus, setAuthStatus] = useState<'loading' | 'signedOut' | 'signedIn'>('loading');
+  const [authUserId, setAuthUserId] = useState<string | null>(null);
 
   const pollingRef = useRef<number | null>(null);
 
@@ -156,8 +170,12 @@ export function CreateClient() {
         const data = await resp.json().catch(() => null);
         if (cancelled) return;
         setAuthStatus(data?.user ? 'signedIn' : 'signedOut');
+        setAuthUserId(data?.user?.id ?? null);
       } catch {
-        if (!cancelled) setAuthStatus('signedOut');
+        if (!cancelled) {
+          setAuthStatus('signedOut');
+          setAuthUserId(null);
+        }
       }
     }
 
@@ -170,8 +188,82 @@ export function CreateClient() {
   useEffect(() => {
     if (authStatus === 'signedIn') {
       setLoginPromptOpen(false);
+    } else if (authStatus === 'signedOut') {
+      setFront(null);
+      setSide(null);
+      setFull(null);
+      setRefs([]);
     }
   }, [authStatus]);
+
+  useEffect(() => {
+    if (authStatus !== 'signedIn' || !authUserId) return;
+    if (typeof window === 'undefined') return;
+    const key = `luminaUploads:${authUserId}`;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return;
+    try {
+      const stored = JSON.parse(raw) as StoredUploads;
+      if (!front && stored.front) {
+        setFront({
+          id: stored.front.id,
+          url: stored.front.url,
+          name: stored.front.name,
+          localPreviewUrl: stored.front.url,
+          status: 'uploaded'
+        });
+      }
+      if (!side && stored.side) {
+        setSide({
+          id: stored.side.id,
+          url: stored.side.url,
+          name: stored.side.name,
+          localPreviewUrl: stored.side.url,
+          status: 'uploaded'
+        });
+      }
+      if (!full && stored.full) {
+        setFull({
+          id: stored.full.id,
+          url: stored.full.url,
+          name: stored.full.name,
+          localPreviewUrl: stored.full.url,
+          status: 'uploaded'
+        });
+      }
+      if (refs.length === 0 && stored.refs && stored.refs.length > 0) {
+        setRefs(
+          stored.refs.map((ref) => ({
+            id: ref.id,
+            url: ref.url,
+            name: ref.name,
+            localPreviewUrl: ref.url,
+            status: 'uploaded'
+          }))
+        );
+      }
+    } catch {
+      // ignore corrupted storage
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authStatus, authUserId]);
+
+  useEffect(() => {
+    if (authStatus !== 'signedIn' || !authUserId) return;
+    if (typeof window === 'undefined') return;
+    const key = `luminaUploads:${authUserId}`;
+    const toStored = (img: UploadedImage | null | undefined): StoredImage | undefined => {
+      if (!img?.id || !img.url) return undefined;
+      return {id: img.id, url: img.url, name: img.name};
+    };
+    const stored: StoredUploads = {
+      front: toStored(front),
+      side: toStored(side),
+      full: toStored(full),
+      refs: refs.map((r) => toStored(r)).filter(Boolean) as StoredImage[]
+    };
+    window.localStorage.setItem(key, JSON.stringify(stored));
+  }, [authStatus, authUserId, front, side, full, refs]);
 
   async function setUpload(kind: 'front' | 'side' | 'full', file: File) {
     setError(null);
@@ -376,7 +468,12 @@ export function CreateClient() {
         const status = String(data.task.status);
         if (status === 'failed' || status === 'cancelled') {
           const reason = extractTaskError(data.task.raw);
-          setTaskError(reason ? `${t('errors.generationFailed')}: ${reason}` : t('errors.generationFailed'));
+          const taskHint = t('errors.taskId', {id: currentTaskId});
+          if (reason) {
+            setTaskError(`${t('errors.generationFailed')}: ${reason}\n${taskHint}`);
+          } else {
+            setTaskError(`${t('errors.generationFailed')}\n${taskHint}`);
+          }
         } else {
           setTaskError(null);
         }
@@ -384,6 +481,7 @@ export function CreateClient() {
         const done = ['completed', 'failed', 'cancelled'].includes(status);
         if (done) {
           setIsGenerating(false);
+          window.dispatchEvent(new Event('auth:refresh'));
           return;
         }
       } catch (e) {

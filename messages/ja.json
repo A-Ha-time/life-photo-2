@@ -147,7 +147,8 @@
       "unknown": "エラーが発生しました",
       "loginRequired": "生成するには先にログインしてください",
       "missingUpload": "必須の写真を先にアップロードしてください",
-      "generationFailed": "生成に失敗しました"
+      "generationFailed": "生成に失敗しました",
+      "taskId": "タスク ID：{id}"
     }
   },
   "Profile": {

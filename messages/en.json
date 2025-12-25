@@ -147,7 +147,8 @@
       "unknown": "Something went wrong",
       "loginRequired": "Please sign in before generating photos",
       "missingUpload": "Please upload the required photos first",
-      "generationFailed": "Generation failed"
+      "generationFailed": "Generation failed",
+      "taskId": "Task ID: {id}"
     }
   },
   "Profile": {

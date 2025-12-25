@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {useLocale, useTranslations} from 'next-intl';
 import {usePathname} from '@/i18n/navigation';
 
@@ -27,36 +27,47 @@ export function AuthStatus() {
   const promoItems = t.raw('promo.items') as string[];
   const nextPath = pathname === '/' ? `/${locale}` : `/${locale}${pathname}`;
 
+  const refreshAuth = useCallback(async () => {
+    try {
+      const resp = await fetch('/api/auth/me', {cache: 'no-store'});
+      const data = await resp.json().catch(() => null);
+      if (!data?.user) {
+        setState({status: 'signedOut'});
+        return;
+      }
+      setState({
+        status: 'signedIn',
+        user: {
+          name: data.user.name ?? 'Guest',
+          email: data.user.email ?? null,
+          avatarUrl: data.user.avatarUrl ?? null
+        },
+        credits: {balance: data.credits?.balance ?? 0}
+      });
+    } catch {
+      setState({status: 'signedOut'});
+    }
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      try {
-        const resp = await fetch('/api/auth/me', {cache: 'no-store'});
-        const data = await resp.json().catch(() => null);
-        if (cancelled) return;
-        if (!data?.user) {
-          setState({status: 'signedOut'});
-          return;
-        }
-        setState({
-          status: 'signedIn',
-          user: {
-            name: data.user.name ?? 'Guest',
-            email: data.user.email ?? null,
-            avatarUrl: data.user.avatarUrl ?? null
-          },
-          credits: {balance: data.credits?.balance ?? 0}
-        });
-      } catch {
-        if (!cancelled) setState({status: 'signedOut'});
-      }
+      if (cancelled) return;
+      await refreshAuth();
     }
-
     load();
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [refreshAuth]);
+
+  useEffect(() => {
+    function onRefresh() {
+      refreshAuth();
+    }
+    window.addEventListener('auth:refresh', onRefresh);
+    return () => window.removeEventListener('auth:refresh', onRefresh);
+  }, [refreshAuth]);
 
   useEffect(() => {
     if (state.status === 'loading') return;
