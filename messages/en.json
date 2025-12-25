@@ -132,13 +132,21 @@
       "meta": "Status: {status} · {size} · {quality}",
       "statusLine": "Status: {status} · {progress}%"
     },
+    "loginPrompt": {
+      "title": "Sign in to generate",
+      "subtitle": "Log in to unlock your free credits and start generating.",
+      "items": ["First sign-in: +30 credits", "Daily sign-in: +10 credits", "2K generation: 3 credits", "4K generation: 9 credits"],
+      "cta": "Sign in now",
+      "close": "Not now"
+    },
     "share": {
       "copied": "Link copied",
       "copyFailed": "Copy failed"
     },
     "errors": {
       "unknown": "Something went wrong",
-      "loginRequired": "Please sign in before generating photos"
+      "loginRequired": "Please sign in before generating photos",
+      "missingUpload": "Please upload the required photos first"
     }
   },
   "Profile": {

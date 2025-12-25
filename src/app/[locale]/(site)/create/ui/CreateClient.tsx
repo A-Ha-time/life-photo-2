@@ -11,9 +11,13 @@ type UploadResult = {
   url: string;
 };
 
-type UploadedImage = UploadResult & {
+type UploadedImage = {
   localPreviewUrl: string;
   name: string;
+  file?: File;
+  id?: string;
+  url?: string;
+  status: 'local' | 'uploaded';
 };
 
 type Task = {
@@ -119,12 +123,13 @@ export function CreateClient() {
   const [eta, setEta] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [zoomUrl, setZoomUrl] = useState<string | null>(null);
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
   const [authStatus, setAuthStatus] = useState<'loading' | 'signedOut' | 'signedIn'>('loading');
 
   const pollingRef = useRef<number | null>(null);
 
   const isAnyUploading = uploading.front || uploading.side || uploading.full || uploading.refs;
-  const canGenerate = Boolean(front?.id && selectedSceneId && !isAnyUploading && !isGenerating);
+  const canGenerate = Boolean(front && selectedSceneId && !isAnyUploading && !isGenerating);
 
   const selectedScene = useMemo(() => {
     if (!selectedSceneId) return null;
@@ -160,16 +165,44 @@ export function CreateClient() {
     };
   }, []);
 
+  useEffect(() => {
+    if (authStatus === 'signedIn') {
+      setLoginPromptOpen(false);
+    }
+  }, [authStatus]);
+
   async function setUpload(kind: 'front' | 'side' | 'full', file: File) {
     setError(null);
+    const localPreviewUrl = URL.createObjectURL(file);
+    if (authStatus !== 'signedIn') {
+      const uploaded: UploadedImage = {
+        localPreviewUrl,
+        name: file.name,
+        file,
+        status: 'local'
+      };
+      if (kind === 'front') {
+        if (front) URL.revokeObjectURL(front.localPreviewUrl);
+        setFront(uploaded);
+      } else if (kind === 'side') {
+        if (side) URL.revokeObjectURL(side.localPreviewUrl);
+        setSide(uploaded);
+      } else {
+        if (full) URL.revokeObjectURL(full.localPreviewUrl);
+        setFull(uploaded);
+      }
+      return;
+    }
+
     setUploading((prev) => ({...prev, [kind]: true}));
     try {
-      const localPreviewUrl = URL.createObjectURL(file);
       const result = await uploadImage(kind, file);
       const uploaded: UploadedImage = {
         ...result,
         localPreviewUrl,
-        name: file.name
+        name: file.name,
+        file,
+        status: 'uploaded'
       };
       if (kind === 'front') {
         if (front) URL.revokeObjectURL(front.localPreviewUrl);
@@ -191,13 +224,23 @@ export function CreateClient() {
   async function addRefs(files: FileList | null) {
     if (!files || files.length === 0) return;
     setError(null);
+    if (authStatus !== 'signedIn') {
+      const next: UploadedImage[] = [];
+      for (const file of Array.from(files).slice(0, 3)) {
+        const localPreviewUrl = URL.createObjectURL(file);
+        next.push({localPreviewUrl, name: file.name, file, status: 'local'});
+      }
+      setRefs((prev) => [...prev, ...next].slice(0, 3));
+      return;
+    }
+
     setUploading((prev) => ({...prev, refs: true}));
     try {
       const next: UploadedImage[] = [];
       for (const file of Array.from(files).slice(0, 3)) {
         const localPreviewUrl = URL.createObjectURL(file);
         const result = await uploadImage('ref', file);
-        next.push({...result, localPreviewUrl, name: file.name});
+        next.push({...result, localPreviewUrl, name: file.name, file, status: 'uploaded'});
       }
       setRefs((prev) => [...prev, ...next].slice(0, 3));
     } catch (e) {
@@ -207,24 +250,76 @@ export function CreateClient() {
     }
   }
 
+  async function ensureUploaded(kind: 'front' | 'side' | 'full', image: UploadedImage | null) {
+    if (!image) return null;
+    if (image.id) return image;
+    if (!image.file) {
+      throw new Error(t('errors.missingUpload'));
+    }
+    setUploading((prev) => ({...prev, [kind]: true}));
+    try {
+      const result = await uploadImage(kind, image.file);
+      const uploaded: UploadedImage = {
+        ...image,
+        ...result,
+        status: 'uploaded'
+      };
+      if (kind === 'front') setFront(uploaded);
+      if (kind === 'side') setSide(uploaded);
+      if (kind === 'full') setFull(uploaded);
+      return uploaded;
+    } finally {
+      setUploading((prev) => ({...prev, [kind]: false}));
+    }
+  }
+
+  async function ensureUploadedRefs(list: UploadedImage[]) {
+    const next: UploadedImage[] = [];
+    const pending = list.filter((item) => !item.id && item.file);
+    if (pending.length === 0) return list;
+    setUploading((prev) => ({...prev, refs: true}));
+    try {
+      for (const item of list) {
+        if (item.id) {
+          next.push(item);
+          continue;
+        }
+        if (!item.file) continue;
+        const result = await uploadImage('ref', item.file);
+        next.push({...item, ...result, status: 'uploaded'});
+      }
+    } finally {
+      setUploading((prev) => ({...prev, refs: false}));
+    }
+    setRefs(next);
+    return next;
+  }
+
   async function onGenerate() {
-    if (authStatus === 'signedOut') {
-      setError(t('errors.loginRequired'));
+    if (authStatus !== 'signedIn') {
+      setError(null);
+      setLoginPromptOpen(true);
       return;
     }
-    if (!front?.id || !selectedSceneId) return;
+    if (!front || !selectedSceneId) return;
     setError(null);
     setIsGenerating(true);
     setTask(null);
     setImages([]);
     setActiveIndex(0);
     try {
+      const finalFront = await ensureUploaded('front', front);
+      const finalSide = await ensureUploaded('side', side);
+      const finalFull = await ensureUploaded('full', full);
+      const finalRefs = await ensureUploadedRefs(refs);
+      if (!finalFront?.id) throw new Error(t('errors.missingUpload'));
+
       const res = await createGeneration({
         sceneId: selectedSceneId,
-        frontUploadId: front.id,
-        sideUploadId: side?.id ?? undefined,
-        fullUploadId: full?.id ?? undefined,
-        refUploadIds: refs.map((r) => r.id),
+        frontUploadId: finalFront.id,
+        sideUploadId: finalSide?.id ?? undefined,
+        fullUploadId: finalFull?.id ?? undefined,
+        refUploadIds: finalRefs.map((r) => r.id).filter(Boolean) as string[],
         customPrompt: customPrompt.trim() ? customPrompt.trim() : undefined,
         gender,
         sizePreset,
@@ -617,7 +712,7 @@ export function CreateClient() {
               </button>
 
               <p style={{color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '0.75rem', textAlign: 'center'}}>
-                {front?.id && selectedSceneId ? (
+              {front && selectedSceneId ? (
                   <>
                     {t('generate.ready')}
                     {eta ? ` · ${t('generate.eta', {eta: formatEta(eta) ?? '-'})}` : null}
@@ -746,6 +841,28 @@ export function CreateClient() {
             </button>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={zoomUrl} alt="Preview large" />
+          </div>
+        </div>
+      ) : null}
+
+      {loginPromptOpen ? (
+        <div className="auth-modal-backdrop" role="dialog" aria-modal="true" onClick={() => setLoginPromptOpen(false)}>
+          <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="auth-modal-title">{t('loginPrompt.title')}</div>
+            <p className="auth-modal-subtitle">{t('loginPrompt.subtitle')}</p>
+            <ul className="auth-modal-list">
+              {(t.raw('loginPrompt.items') as string[]).map((item, idx) => (
+                <li key={`${item}-${idx}`}>{item}</li>
+              ))}
+            </ul>
+            <div className="auth-modal-actions">
+              <button className="btn-outline-gold btn-compact" type="button" onClick={() => setLoginPromptOpen(false)}>
+                {t('loginPrompt.close')}
+              </button>
+              <a className="btn-gold btn-compact" href={`/api/auth/login?next=${encodeURIComponent(`/${locale}/create`)}`}>
+                {t('loginPrompt.cta')}
+              </a>
+            </div>
           </div>
         </div>
       ) : null}

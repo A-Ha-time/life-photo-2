@@ -22,6 +22,7 @@ export function AuthStatus() {
   const [creditsOpen, setCreditsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const initialAuthRef = useRef(false);
   const creditsItems = t.raw('creditsRules.items') as string[];
   const promoItems = t.raw('promo.items') as string[];
   const nextPath = pathname === '/' ? `/${locale}` : `/${locale}${pathname}`;
@@ -58,8 +59,12 @@ export function AuthStatus() {
   }, []);
 
   useEffect(() => {
-    if (state.status !== 'signedOut') return;
-    setPromoOpen(true);
+    if (state.status === 'loading') return;
+    if (initialAuthRef.current) return;
+    initialAuthRef.current = true;
+    if (state.status === 'signedOut') {
+      setPromoOpen(true);
+    }
   }, [state.status]);
 
   useEffect(() => {

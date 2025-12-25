@@ -132,13 +132,21 @@
       "meta": "状態: {status} · {size} · {quality}",
       "statusLine": "状態: {status} · {progress}%"
     },
+    "loginPrompt": {
+      "title": "ログインして生成しましょう",
+      "subtitle": "ログインで無料クレジットを受け取り、生成を開始できます。",
+      "items": ["初回ログインで 30 クレジット", "毎日ログインで 10 クレジット", "2K 生成は 3 クレジット消費", "4K 生成は 9 クレジット消費"],
+      "cta": "今すぐログイン",
+      "close": "あとで"
+    },
     "share": {
       "copied": "リンクをコピーしました",
       "copyFailed": "コピーに失敗しました"
     },
     "errors": {
       "unknown": "エラーが発生しました",
-      "loginRequired": "生成するには先にログインしてください"
+      "loginRequired": "生成するには先にログインしてください",
+      "missingUpload": "必須の写真を先にアップロードしてください"
     }
   },
   "Profile": {
