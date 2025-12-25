@@ -83,6 +83,12 @@ function buildPrompt({
     'If there is any conflict between identity and composition, always prioritize identity.'
   ].join(' ');
 
+  const identityPriority = [
+    'Identity lock: the person must be clearly the same individual as the user photos.',
+    'Preserve unique facial characteristics and proportions; do not beautify or alter the face.',
+    'Use the frontal reference as the primary face anchor; keep facial geometry consistent even in action scenes.'
+  ].join(' ');
+
   const quality = [
     'Photorealistic and natural: true skin texture, natural hair flow, realistic fabric folds, lighting and shadows matching the environment.',
     'Pose and facial expression must fit the scene/action naturally (e.g., surfing -> dynamic action, balanced stance, appropriate gaze).',
@@ -94,10 +100,10 @@ function buildPrompt({
     `Composition: ${compositionHint}.`,
     `Camera & lens: ${cameraHint}.`,
     `Pose & action: ${poseHint}.`,
-    'Match the scene reference composition as closely as possible: camera angle, framing, subject scale, and lighting.',
+    'Match the scene reference composition as closely as possible: camera angle, framing, subject scale, and lighting, while keeping identity fixed.',
     'Use the scene for background, environment, lighting, color mood, and overall composition.',
     'Do NOT use any faces or people from the scene reference; the only person must be from the user photos.',
-    'The last two reference images are the scene references. Follow their composition and lighting.'
+    'The last reference image is the scene reference. Follow its composition and lighting.'
   ].join(' ');
   const genderHint = `Subject gender: ${gender}. Keep it consistent with the reference photos.`;
   const bodyHint = hasFullBody
@@ -107,7 +113,7 @@ function buildPrompt({
       : 'Only frontal reference is provided; infer body carefully while keeping proportions consistent.';
   const extra = customPrompt ? `User request: ${customPrompt}` : '';
 
-  return [identity, quality, scene, genderHint, bodyHint, extra].filter(Boolean).join(' ');
+  return [identity, identityPriority, quality, scene, genderHint, bodyHint, extra].filter(Boolean).join(' ');
 }
 
 async function getUploadUrlById(userId: string, uploadId: string) {

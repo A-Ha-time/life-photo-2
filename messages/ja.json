@@ -108,6 +108,7 @@
     "settings": {
       "title": "詳細設定",
       "customPrompt": "カスタムプロンプト",
+      "customPromptOptional": "（任意）",
       "customPromptPlaceholder": "希望する雰囲気（例：晴天、プロ写真、超リアル）",
       "size": "サイズ",
       "quality": "画質",

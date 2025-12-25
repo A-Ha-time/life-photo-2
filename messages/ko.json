@@ -108,6 +108,7 @@
     "settings": {
       "title": "고급 설정",
       "customPrompt": "커스텀 프롬프트",
+      "customPromptOptional": "(선택)",
       "customPromptPlaceholder": "원하는 분위기를 설명하세요 (예: 햇살, 프로 사진, 초현실)",
       "size": "크기",
       "quality": "품질",

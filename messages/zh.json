@@ -108,6 +108,7 @@
     "settings": {
       "title": "高级设置",
       "customPrompt": "自定义提示词",
+      "customPromptOptional": "（选填）",
       "customPromptPlaceholder": "描述你想要的效果，例如：阳光明媚，专业摄影，高清画质",
       "size": "尺寸",
       "quality": "清晰度",

@@ -770,7 +770,8 @@ export function CreateClient() {
 
               <div style={{marginBottom: '1rem'}}>
                 <label style={{display: 'block', color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.875rem'}}>
-                  {t('settings.customPrompt')}
+                  {t('settings.customPrompt')}{' '}
+                  <span style={{color: 'var(--text-muted)', fontSize: '0.75rem'}}>{t('settings.customPromptOptional')}</span>
                 </label>
                 <textarea
                   className="input-studio"

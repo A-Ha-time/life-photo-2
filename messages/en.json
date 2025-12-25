@@ -108,6 +108,7 @@
     "settings": {
       "title": "Advanced Settings",
       "customPrompt": "Custom prompt",
+      "customPromptOptional": "(optional)",
       "customPromptPlaceholder": "Describe the look you want (e.g. sunny, professional photography, ultra realistic)",
       "size": "Size",
       "quality": "Quality",
