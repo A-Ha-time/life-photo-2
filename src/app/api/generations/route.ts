@@ -55,12 +55,22 @@ function mapQualityPresetToApi(qualityPreset: string): '1K' | '2K' | '4K' {
 
 function buildPrompt({
   sceneHint,
+  compositionHint,
+  cameraHint,
+  poseHint,
   customPrompt,
-  gender
+  gender,
+  hasFullBody,
+  hasSide
 }: {
   sceneHint: string;
+  compositionHint: string;
+  cameraHint: string;
+  poseHint: string;
   customPrompt?: string;
   gender: 'male' | 'female';
+  hasFullBody: boolean;
+  hasSide: boolean;
 }) {
   const identity = [
     'Strictly keep the same person identity as the reference photos:',
@@ -69,24 +79,35 @@ function buildPrompt({
     '- same skin tone, body build, and proportions.',
     '- clothing can adapt to the scene (gear/outfit that fits the environment) while keeping the same person.',
     '- do not change ethnicity, age, or gender.',
-    'Do not introduce a different person. No face swap. No new identity.'
+    'Do not introduce a different person. No face swap. No new identity.',
+    'If there is any conflict between identity and composition, always prioritize identity.'
   ].join(' ');
 
   const quality = [
     'Photorealistic and natural: true skin texture, natural hair flow, realistic fabric folds, lighting and shadows matching the environment.',
     'Pose and facial expression must fit the scene/action naturally (e.g., surfing -> dynamic action, balanced stance, appropriate gaze).',
-    'No cartoon, no painting, no plastic skin, no extra limbs, no distorted face, no watermark, no text.'
+    'No cartoon, no painting, no plastic skin, no extra limbs, no missing limbs, no distorted face, no watermark, no text.'
   ].join(' ');
 
   const scene = [
     `Scene: ${sceneHint}.`,
-    'Use the scene only for background, environment, lighting and color mood.',
-    'Do NOT use any faces or people from the scene reference; the only person must be from the user photos.'
+    `Composition: ${compositionHint}.`,
+    `Camera & lens: ${cameraHint}.`,
+    `Pose & action: ${poseHint}.`,
+    'Match the scene reference composition as closely as possible: camera angle, framing, subject scale, and lighting.',
+    'Use the scene for background, environment, lighting, color mood, and overall composition.',
+    'Do NOT use any faces or people from the scene reference; the only person must be from the user photos.',
+    'The last two reference images are the scene references. Follow their composition and lighting.'
   ].join(' ');
   const genderHint = `Subject gender: ${gender}. Keep it consistent with the reference photos.`;
+  const bodyHint = hasFullBody
+    ? 'A full-body reference is provided; keep body proportions and limb lengths consistent.'
+    : hasSide
+      ? 'A side reference is provided; keep facial profile and head shape consistent.'
+      : 'Only frontal reference is provided; infer body carefully while keeping proportions consistent.';
   const extra = customPrompt ? `User request: ${customPrompt}` : '';
 
-  return [identity, quality, scene, genderHint, extra].filter(Boolean).join(' ');
+  return [identity, quality, scene, genderHint, bodyHint, extra].filter(Boolean).join(' ');
 }
 
 async function getUploadUrlById(userId: string, uploadId: string) {
@@ -148,7 +169,7 @@ export async function POST(request: Request) {
   }
   const userImageUrls = personImages.slice(0, 3);
   const sceneRef = scene.coverImageUrl[parsed.data.gender];
-  const image_urls = [...userImageUrls, sceneRef].slice(0, 6);
+  const image_urls = [...userImageUrls, sceneRef, sceneRef].slice(0, 6);
 
   const size = mapSizePresetToRatio(parsed.data.sizePreset);
   const quality = mapQualityPresetToApi(parsed.data.qualityPreset);
@@ -157,8 +178,13 @@ export async function POST(request: Request) {
 
   const prompt = buildPrompt({
     sceneHint: scene.promptHint.en,
+    compositionHint: scene.compositionHint.en,
+    cameraHint: scene.cameraHint.en,
+    poseHint: scene.poseHint.en,
     customPrompt: parsed.data.customPrompt,
-    gender: parsed.data.gender
+    gender: parsed.data.gender,
+    hasFullBody: Boolean(fullUrl),
+    hasSide: Boolean(sideUrl)
   });
 
   // 回调不是必须，但推荐启用；本地开发请用 ngrok / cloudflared 提供 https 公网域名
