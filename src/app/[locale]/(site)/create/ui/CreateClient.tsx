@@ -30,6 +30,7 @@ type Task = {
   quality: string;
   createdAt: number;
   updatedAt: number;
+  raw?: any;
 };
 
 type TaskImage = {
@@ -122,6 +123,7 @@ export function CreateClient() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [eta, setEta] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [taskError, setTaskError] = useState<string | null>(null);
   const [zoomUrl, setZoomUrl] = useState<string | null>(null);
   const [loginPromptOpen, setLoginPromptOpen] = useState(false);
   const [authStatus, setAuthStatus] = useState<'loading' | 'signedOut' | 'signedIn'>('loading');
@@ -295,6 +297,30 @@ export function CreateClient() {
     return next;
   }
 
+  function extractTaskError(raw: any) {
+    if (!raw) return null;
+    if (typeof raw === 'string') return raw;
+    const candidates = [
+      raw.error?.message,
+      raw.error?.detail,
+      raw.error?.code,
+      raw.error,
+      raw.message,
+      raw.detail,
+      raw.reason
+    ];
+    for (const c of candidates) {
+      if (!c) continue;
+      if (typeof c === 'string') return c;
+      try {
+        return JSON.stringify(c);
+      } catch {
+        return String(c);
+      }
+    }
+    return null;
+  }
+
   async function onGenerate() {
     if (authStatus !== 'signedIn') {
       setError(null);
@@ -303,6 +329,7 @@ export function CreateClient() {
     }
     if (!front || !selectedSceneId) return;
     setError(null);
+    setTaskError(null);
     setIsGenerating(true);
     setTask(null);
     setImages([]);
@@ -346,7 +373,15 @@ export function CreateClient() {
         setImages(data.images);
         if (data.images.length > 0 && activeIndex >= data.images.length) setActiveIndex(0);
 
-        const done = ['completed', 'failed', 'cancelled'].includes(String(data.task.status));
+        const status = String(data.task.status);
+        if (status === 'failed' || status === 'cancelled') {
+          const reason = extractTaskError(data.task.raw);
+          setTaskError(reason ? `${t('errors.generationFailed')}: ${reason}` : t('errors.generationFailed'));
+        } else {
+          setTaskError(null);
+        }
+
+        const done = ['completed', 'failed', 'cancelled'].includes(status);
         if (done) {
           setIsGenerating(false);
           return;
@@ -393,7 +428,7 @@ export function CreateClient() {
           <p className="subtitle-elegant">{t('subtitle')}</p>
         </div>
 
-        {error ? (
+        {error || taskError ? (
           <div
             className="studio-card"
             style={{
@@ -404,7 +439,7 @@ export function CreateClient() {
           >
             <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--error)'}}>
               <i className="fas fa-triangle-exclamation" />
-              <span style={{color: 'var(--text-secondary)', whiteSpace: 'pre-wrap'}}>{error}</span>
+              <span style={{color: 'var(--text-secondary)', whiteSpace: 'pre-wrap'}}>{error ?? taskError}</span>
             </div>
           </div>
         ) : null}

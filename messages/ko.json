@@ -146,7 +146,8 @@
     "errors": {
       "unknown": "오류가 발생했습니다",
       "loginRequired": "생성 전에 먼저 로그인해주세요",
-      "missingUpload": "필수 사진을 먼저 업로드해주세요"
+      "missingUpload": "필수 사진을 먼저 업로드해주세요",
+      "generationFailed": "생성에 실패했습니다"
     }
   },
   "Profile": {

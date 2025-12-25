@@ -146,7 +146,8 @@
     "errors": {
       "unknown": "发生未知错误",
       "loginRequired": "请先登录后再生成照片",
-      "missingUpload": "请先上传必需的照片"
+      "missingUpload": "请先上传必需的照片",
+      "generationFailed": "生成失败"
     }
   },
   "Profile": {
