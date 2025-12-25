@@ -86,7 +86,9 @@ function buildPrompt({
   const identityPriority = [
     'Identity lock: the person must be clearly the same individual as the user photos.',
     'Preserve unique facial characteristics and proportions; do not beautify or alter the face.',
-    'Use the frontal reference as the primary face anchor; keep facial geometry consistent even in action scenes.'
+    'Use the frontal reference as the primary face anchor; keep facial geometry consistent even in action scenes.',
+    'Keep exact facial structure: eye shape/spacing, nose bridge/width, lip shape, cheekbones, jawline, hairline.',
+    'Do not make the face generic, do not change expression into a different person, no age shift.'
   ].join(' ');
 
   const quality = [
@@ -101,6 +103,7 @@ function buildPrompt({
     `Camera & lens: ${cameraHint}.`,
     `Pose & action: ${poseHint}.`,
     'Match the scene reference composition as closely as possible: camera angle, framing, subject scale, and lighting, while keeping identity fixed.',
+    'If pose or camera conflicts with face identity, adjust the pose/camera first, never the face.',
     'Use the scene for background, environment, lighting, color mood, and overall composition.',
     'Do NOT use any faces or people from the scene reference; the only person must be from the user photos.',
     'The last reference image is the scene reference. Follow its composition and lighting.'
