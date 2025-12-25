@@ -314,6 +314,16 @@ body {
     transition: all 0.3s ease;
 }
 
+.btn-compact {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.875rem;
+    line-height: 1;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .btn-outline-gold:hover {
     background: var(--gold-primary);
     color: var(--bg-primary);
@@ -486,6 +496,13 @@ body {
     color: var(--gold-light);
     font-size: 0.875rem;
     font-weight: 600;
+}
+
+.badge-compact {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    line-height: 1;
+    height: 32px;
 }
 
 /* ========== 分割线 ========== */

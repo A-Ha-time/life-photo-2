@@ -53,7 +53,7 @@ export function AuthStatus() {
 
   if (state.status === 'signedOut') {
     return (
-      <a className="btn-outline-gold" href={`/api/auth/login?next=${encodeURIComponent(pathname)}`}>
+      <a className="btn-outline-gold btn-compact" href={`/api/auth/login?next=${encodeURIComponent(pathname)}`}>
         {t('signIn')}
       </a>
     );
@@ -61,11 +61,11 @@ export function AuthStatus() {
 
   return (
     <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
-      <div className="badge-gold" style={{padding: '0.4rem 0.75rem'}}>
+      <div className="badge-gold badge-compact">
         <i className="fas fa-coins" />
         {t('credits', {count: state.credits.balance})}
       </div>
-      <a className="btn-outline-gold" href={`/api/auth/logout?next=${encodeURIComponent(pathname)}`}>
+      <a className="btn-outline-gold btn-compact" href={`/api/auth/logout?next=${encodeURIComponent(pathname)}`}>
         {t('signOut')}
       </a>
     </div>
