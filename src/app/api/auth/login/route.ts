@@ -2,6 +2,7 @@ import {NextResponse} from 'next/server';
 
 import {getBaseUrlFromRequest} from '@/server/env';
 import {getSupabaseAuthUrl} from '@/server/supabase';
+import {createPkcePair, PKCE_COOKIE_NAME} from '@/server/pkce';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,18 @@ export async function GET(request: Request) {
   const {searchParams} = new URL(request.url);
   const next = searchParams.get('next') || '/home';
   const redirectTo = `${baseUrl}/api/auth/callback?next=${encodeURIComponent(next)}`;
-  const target = `${authUrl}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectTo)}`;
-  return NextResponse.redirect(target);
+  const {verifier, challenge} = createPkcePair();
+  const target = `${authUrl}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(
+    redirectTo
+  )}&code_challenge=${encodeURIComponent(challenge)}&code_challenge_method=s256&response_type=code`;
+  const response = NextResponse.redirect(target);
+  const secure = baseUrl.startsWith('https://');
+  response.cookies.set(PKCE_COOKIE_NAME, verifier, {
+    httpOnly: true,
+    secure,
+    sameSite: 'lax',
+    path: '/api/auth/callback',
+    maxAge: 60 * 10
+  });
+  return response;
 }

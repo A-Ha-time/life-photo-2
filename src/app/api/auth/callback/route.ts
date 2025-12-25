@@ -1,10 +1,12 @@
 import {NextResponse} from 'next/server';
+import {cookies} from 'next/headers';
 
-import {createSupabaseServerClient} from '@/server/supabase';
+import {exchangeSupabaseCodeForSession} from '@/server/supabase';
 import {getBaseUrlFromRequest} from '@/server/env';
 import {setAuthCookies} from '@/server/auth';
 import {ensureSchema, sql} from '@/server/db';
 import {getCredits} from '@/server/credits';
+import {PKCE_COOKIE_NAME} from '@/server/pkce';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -20,31 +22,47 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${baseUrl}${next}`);
   }
 
-  const supabase = createSupabaseServerClient();
-  const {data, error} = await supabase.auth.exchangeCodeForSession(code);
-
-  if (error || !data.session || !data.user) {
+  const cookieStore = cookies();
+  const codeVerifier = cookieStore.get(PKCE_COOKIE_NAME)?.value;
+  if (!codeVerifier) {
     return NextResponse.redirect(`${baseUrl}${next}`);
   }
 
-  const session = data.session;
+  let payload: any;
+  try {
+    payload = await exchangeSupabaseCodeForSession(code, codeVerifier);
+  } catch {
+    return NextResponse.redirect(`${baseUrl}${next}`);
+  }
+
+  if (!payload?.access_token || !payload?.refresh_token || !payload?.user) {
+    return NextResponse.redirect(`${baseUrl}${next}`);
+  }
+
   const response = NextResponse.redirect(`${baseUrl}${next}`);
   const secure = baseUrl.startsWith('https://');
+  response.cookies.set(PKCE_COOKIE_NAME, '', {
+    httpOnly: true,
+    secure,
+    sameSite: 'lax',
+    path: '/api/auth/callback',
+    maxAge: 0
+  });
   setAuthCookies(
     response,
     {
-      accessToken: session.access_token,
-      refreshToken: session.refresh_token,
-      expiresAt: session.expires_at ?? Math.floor(Date.now() / 1000) + session.expires_in
+      accessToken: payload.access_token,
+      refreshToken: payload.refresh_token,
+      expiresAt: payload.expires_at ?? Math.floor(Date.now() / 1000) + payload.expires_in
     },
     secure
   );
 
   await ensureSchema();
-  const userId = data.user.id;
-  const displayName = data.user.user_metadata?.full_name || data.user.user_metadata?.name || 'Guest';
-  const avatarUrl = data.user.user_metadata?.avatar_url || null;
-  const email = data.user.email ?? null;
+  const userId = payload.user.id;
+  const displayName = payload.user.user_metadata?.full_name || payload.user.user_metadata?.name || 'Guest';
+  const avatarUrl = payload.user.user_metadata?.avatar_url || null;
+  const email = payload.user.email ?? null;
 
   await sql`INSERT INTO users (id) VALUES (${userId}) ON CONFLICT (id) DO NOTHING`;
   await sql`
