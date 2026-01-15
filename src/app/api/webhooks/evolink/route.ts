@@ -3,6 +3,7 @@ import {NextResponse} from 'next/server';
 import {ensureSchema, sql} from '@/server/db';
 import {getEvolinkWebhookSecret} from '@/server/env';
 import {refundCredits} from '@/server/credits';
+import {persistGeneratedImages} from '@/server/image-store';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -82,20 +83,21 @@ export async function POST(request: Request) {
     const urls = new Set<string>();
     collectImageUrls(payload, urls);
 
-    const requestRes = await sql`SELECT request_json FROM generation_tasks WHERE id = ${taskId} LIMIT 1`;
+    const requestRes = await sql`SELECT request_json, user_id FROM generation_tasks WHERE id = ${taskId} LIMIT 1`;
     const requestJson = (requestRes.rows[0]?.request_json as any) ?? null;
+    const taskUserId = (requestRes.rows[0]?.user_id as string | undefined) ?? null;
     const inputUrls = new Set<string>(
       Array.isArray(requestJson?.image_urls) ? (requestJson.image_urls as string[]) : []
     );
 
     // 避免把参考图/源图也当作“结果图”
-    const filtered = [...urls].filter((u) => !inputUrls.has(u));
-    for (const u of filtered) {
-      await sql`
-        INSERT INTO images (id, task_id, url)
-        VALUES (${crypto.randomUUID()}, ${taskId}, ${u})
-        ON CONFLICT (task_id, url) DO NOTHING
-      `;
+    if (taskUserId) {
+      await persistGeneratedImages({
+        taskId,
+        userId: taskUserId,
+        urls: [...urls],
+        inputUrls
+      });
     }
   }
 

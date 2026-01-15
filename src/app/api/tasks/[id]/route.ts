@@ -4,6 +4,7 @@ import {ensureSchema, sql} from '@/server/db';
 import {getUserId} from '@/server/user';
 import {getEvolinkGenerationEnv} from '@/server/env';
 import {refundCredits} from '@/server/credits';
+import {persistGeneratedImages} from '@/server/image-store';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -91,15 +92,13 @@ export async function GET(_request: Request, {params}: {params: {id: string}}) {
           const inputUrls = new Set<string>(
             Array.isArray(requestJson?.image_urls) ? (requestJson.image_urls as string[]) : []
           );
-          const filtered = [...urls].filter((u) => !inputUrls.has(u));
 
-          for (const u of filtered) {
-            await sql`
-              INSERT INTO images (id, task_id, url)
-              VALUES (${crypto.randomUUID()}, ${task.id}, ${u})
-              ON CONFLICT (task_id, url) DO NOTHING
-            `;
-          }
+          await persistGeneratedImages({
+            taskId: task.id,
+            userId,
+            urls: [...urls],
+            inputUrls
+          });
         }
 
         if ((status === 'failed' || status === 'cancelled') && !task.credits_refunded && task.credits_cost > 0) {

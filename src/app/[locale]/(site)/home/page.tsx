@@ -153,14 +153,14 @@ export default async function HomePage() {
               <i className="fas fa-magic" />
               {t('ctaPrimary')}
             </Link>
-            <button
+            <a
               className="btn-outline-gold"
-              style={{display: 'inline-flex', alignItems: 'center', gap: '0.75rem'}}
-              type="button"
+              style={{display: 'inline-flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none'}}
+              href="#featured-gallery"
             >
               <i className="fas fa-play-circle" />
               {t('ctaSecondary')}
-            </button>
+            </a>
           </div>
 
           {/* Stats */}
@@ -246,7 +246,7 @@ export default async function HomePage() {
       </section>
 
       {/* Photo wall */}
-      <section className="section-spacing" style={{background: 'var(--bg-primary)'}}>
+      <section id="featured-gallery" className="section-spacing" style={{background: 'var(--bg-primary)'}}>
         <div className="container-studio">
           <div style={{textAlign: 'center', marginBottom: '5rem'}}>
             <h2 className="title-elegant" style={{fontSize: '3.5rem', marginBottom: '1rem'}}>
