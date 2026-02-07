@@ -1,9 +1,24 @@
-import {getTranslations} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
 
 import {Link} from '@/i18n/navigation';
+import {getSiteUrl} from '@/lib/seo';
 
 export default async function HomePage() {
   const t = await getTranslations('Home');
+  const seo = await getTranslations('SEO');
+  const locale = await getLocale();
+  const baseUrl = getSiteUrl();
+  const canonical = `${baseUrl}/${locale}/home`;
+  const keywords = (seo.raw('keywords') as string[]).join(', ');
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: seo('siteName'),
+    url: canonical,
+    inLanguage: locale,
+    description: seo('description'),
+    keywords
+  };
   const galleryItems = [
     {
       img: 'https://images.unsplash.com/photo-1621803458830-50d0c5cbe9e7?w=600&h=800&fit=crop',
@@ -93,6 +108,11 @@ export default async function HomePage() {
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData)}}
+      />
       {/* Hero Section */}
       <section
         className="photo-studio-bg vignette"
