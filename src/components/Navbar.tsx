@@ -10,7 +10,7 @@ export function Navbar() {
   const t = useTranslations('Nav');
   const pathname = usePathname();
 
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <nav className="navbar">
@@ -29,6 +29,11 @@ export function Navbar() {
           <li>
             <Link href="/create" className={`navbar-link ${isActive('/create') ? 'active' : ''}`}>
               {t('create')}
+            </Link>
+          </li>
+          <li>
+            <Link href="/guides" className={`navbar-link ${isActive('/guides') ? 'active' : ''}`}>
+              {t('guides')}
             </Link>
           </li>
           <li>

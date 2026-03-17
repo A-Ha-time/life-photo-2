@@ -20,25 +20,15 @@ export async function generateMetadata({
   const description = t('description');
   const keywords = t.raw('keywords') as string[];
   const baseUrl = getSiteUrl();
-  const url = `${baseUrl}/${locale}/home`;
-  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
-    acc[l] = `${baseUrl}/${l}/home`;
-    return acc;
-  }, {});
 
   return {
     metadataBase: new URL(baseUrl),
     title,
     description,
     keywords,
-    alternates: {
-      canonical: url,
-      languages
-    },
     openGraph: {
       title,
       description,
-      url,
       siteName: 'LUMINA STUDIO',
       locale,
       type: 'website',

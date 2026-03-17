@@ -1,9 +1,45 @@
+import type {Metadata} from 'next';
 import {getTranslations} from 'next-intl/server';
 
+import {routing, type AppLocale} from '@/i18n/routing';
 import {getUserId} from '@/server/user';
 import {ensureSchema, sql} from '@/server/db';
+import {getSiteUrl} from '@/lib/seo';
 
 import {ProfileClient} from './ui/ProfileClient';
+
+export async function generateMetadata({
+  params
+}: {
+  params: {locale: AppLocale};
+}): Promise<Metadata> {
+  const {locale} = params;
+  const [seo, nav] = await Promise.all([
+    getTranslations({locale, namespace: 'SEO'}),
+    getTranslations({locale, namespace: 'Nav'})
+  ]);
+  const baseUrl = getSiteUrl();
+  const canonical = `${baseUrl}/${locale}/profile`;
+  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = `${baseUrl}/${l}/profile`;
+    return acc;
+  }, {});
+  languages['x-default'] = `${baseUrl}/en/profile`;
+  const title = `${nav('profile')} | ${seo('siteName')}`;
+
+  return {
+    title,
+    description: nav('profile'),
+    alternates: {
+      canonical,
+      languages
+    },
+    robots: {
+      index: false,
+      follow: false
+    }
+  };
+}
 
 export default async function ProfilePage() {
   const userId = await getUserId();

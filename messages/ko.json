@@ -4,7 +4,17 @@
     "create": "제작",
     "profile": "프로필",
     "privacy": "개인정보·약관",
+    "guides": "가이드",
     "cta": "만들기 시작"
+  },
+  "Footer": {
+    "description": "얼굴 일관성을 유지하면서 SNS용 AI 인물 사진을 빠르게 제작할 수 있는 플랫폼입니다.",
+    "quickLinks": "빠른 링크",
+    "resources": "리소스",
+    "guidesHub": "가이드 허브",
+    "sitemap": "사이트맵",
+    "robots": "크롤러 정책",
+    "copyright": "© {year} LUMINA STUDIO. All rights reserved."
   },
   "Language": {
     "label": "언어",
@@ -107,7 +117,12 @@
     "ctaTitle2": "순간",
     "ctaTitle3": "을 만들 준비가 되셨나요?",
     "ctaSubtitle": "수만 명과 함께 AI 사진 제작을 시작하세요.",
-    "ctaButton": "무료로 시작"
+    "ctaButton": "무료로 시작",
+    "guidesTitle1": "실전",
+    "guidesTitle2": "가이드",
+    "guidesSubtitle": "AI 프로필 사진, SNS 이미지, 얼굴 일관성을 위한 실용 가이드 모음.",
+    "guidesRead": "가이드 보기",
+    "guidesCta": "전체 가이드 보기"
   },
   "Create": {
     "title1": "제작",

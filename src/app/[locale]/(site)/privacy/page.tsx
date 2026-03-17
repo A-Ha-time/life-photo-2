@@ -1,4 +1,62 @@
+import type {Metadata} from 'next';
 import {getTranslations} from 'next-intl/server';
+
+import {routing, type AppLocale} from '@/i18n/routing';
+import {getSiteUrl} from '@/lib/seo';
+
+export async function generateMetadata({
+  params
+}: {
+  params: {locale: AppLocale};
+}): Promise<Metadata> {
+  const {locale} = params;
+  const [seo, privacy] = await Promise.all([
+    getTranslations({locale, namespace: 'SEO'}),
+    getTranslations({locale, namespace: 'Privacy'})
+  ]);
+  const baseUrl = getSiteUrl();
+  const canonical = `${baseUrl}/${locale}/privacy`;
+  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = `${baseUrl}/${l}/privacy`;
+    return acc;
+  }, {});
+  languages['x-default'] = `${baseUrl}/en/privacy`;
+  const title = `${privacy('title1')} ${privacy('title2')} | ${seo('siteName')}`;
+  const description = privacy('subtitle');
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: seo('siteName'),
+      locale,
+      type: 'article'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1
+      }
+    }
+  };
+}
 
 export default async function PrivacyPage() {
   const t = await getTranslations('Privacy');
@@ -127,4 +185,3 @@ export default async function PrivacyPage() {
     </main>
   );
 }
-

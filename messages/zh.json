@@ -4,7 +4,17 @@
     "create": "创作",
     "profile": "个人中心",
     "privacy": "隐私·协议",
+    "guides": "指南",
     "cta": "开始创作"
+  },
+  "Footer": {
+    "description": "专注社媒照片与人脸一致性的 AI 写真生成平台，帮助你更快产出可发布内容。",
+    "quickLinks": "快速入口",
+    "resources": "资源",
+    "guidesHub": "指南中心",
+    "sitemap": "站点地图",
+    "robots": "抓取规则",
+    "copyright": "© {year} LUMINA STUDIO。保留所有权利。"
   },
   "Language": {
     "label": "语言",
@@ -101,7 +111,12 @@
     "ctaTitle2": "专属瞬间",
     "ctaTitle3": "了吗？",
     "ctaSubtitle": "加入数万用户，开启你的 AI 摄影创作之旅",
-    "ctaButton": "立即开始免费试用"
+    "ctaButton": "立即开始免费试用",
+    "guidesTitle1": "实战",
+    "guidesTitle2": "指南",
+    "guidesSubtitle": "围绕 AI 头像、社媒照片与人脸一致性的可执行方法。",
+    "guidesRead": "阅读指南",
+    "guidesCta": "查看全部指南"
   },
   "Create": {
     "title1": "创作",

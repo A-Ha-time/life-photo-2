@@ -637,6 +637,67 @@ body {
     padding: 0 2rem;
 }
 
+/* ========== 页脚 ========== */
+.site-footer {
+    border-top: 1px solid var(--border-subtle);
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.96) 0%, rgba(10, 10, 10, 1) 100%);
+}
+
+.site-footer-inner {
+    padding-top: 3rem;
+    padding-bottom: 2.25rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.site-footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+}
+
+.site-footer-desc {
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 520px;
+}
+
+.site-footer-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--champagne);
+    margin-bottom: 0.9rem;
+}
+
+.site-footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.site-footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.site-footer-links a:hover {
+    color: var(--gold-primary);
+}
+
+.site-footer-bottom {
+    border-top: 1px solid var(--divider);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 0.95rem 0;
+}
+
 /* ========== 动画效果 ========== */
 @keyframes fadeInUp {
     from {
@@ -722,6 +783,12 @@ body {
     .photo-wall {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
+    }
+
+    .site-footer-inner {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+        padding-top: 2.4rem;
     }
 }
 

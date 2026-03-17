@@ -1,16 +1,70 @@
+import type {Metadata} from 'next';
 import {getLocale, getTranslations} from 'next-intl/server';
 
 import {Link} from '@/i18n/navigation';
+import {routing, type AppLocale} from '@/i18n/routing';
+import {getGuides} from '@/lib/guides';
 import {getSiteUrl} from '@/lib/seo';
+
+export async function generateMetadata({
+  params
+}: {
+  params: {locale: AppLocale};
+}): Promise<Metadata> {
+  const {locale} = params;
+  const seo = await getTranslations({locale, namespace: 'SEO'});
+  const baseUrl = getSiteUrl();
+  const canonical = `${baseUrl}/${locale}/home`;
+  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = `${baseUrl}/${l}/home`;
+    return acc;
+  }, {});
+  languages['x-default'] = `${baseUrl}/en/home`;
+
+  return {
+    title: seo('title'),
+    description: seo('description'),
+    keywords: seo.raw('keywords') as string[],
+    alternates: {
+      canonical,
+      languages
+    },
+    openGraph: {
+      title: seo('title'),
+      description: seo('description'),
+      url: canonical,
+      siteName: seo('siteName'),
+      locale,
+      type: 'website'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo('title'),
+      description: seo('description')
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1
+      }
+    }
+  };
+}
 
 export default async function HomePage() {
   const t = await getTranslations('Home');
   const seo = await getTranslations('SEO');
-  const locale = await getLocale();
+  const locale = (await getLocale()) as AppLocale;
   const baseUrl = getSiteUrl();
   const canonical = `${baseUrl}/${locale}/home`;
   const keywords = (seo.raw('keywords') as string[]).join(', ');
-  const structuredData = {
+  const guideHighlights = getGuides(locale).slice(0, 3);
+  const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: seo('siteName'),
@@ -18,6 +72,13 @@ export default async function HomePage() {
     inLanguage: locale,
     description: seo('description'),
     keywords
+  };
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: seo('siteName'),
+    url: baseUrl,
+    description: seo('description')
   };
   const galleryItems = [
     {
@@ -111,7 +172,12 @@ export default async function HomePage() {
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData)}}
+        dangerouslySetInnerHTML={{__html: JSON.stringify(websiteSchema)}}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{__html: JSON.stringify(organizationSchema)}}
       />
       {/* Hero Section */}
       <section
@@ -307,7 +373,7 @@ export default async function HomePage() {
             <p className="subtitle-elegant">{t('testimonialsSubtitle')}</p>
           </div>
 
-          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem'}}>
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem'}}>
             {[
               {
                 avatar:
@@ -357,6 +423,49 @@ export default async function HomePage() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Guides */}
+      <section className="section-spacing" style={{background: 'var(--bg-primary)'}}>
+        <div className="container-studio">
+          <div style={{textAlign: 'center', marginBottom: '4rem'}}>
+            <h2 className="title-elegant" style={{fontSize: '3rem', marginBottom: '1rem'}}>
+              {t('guidesTitle1')} <span className="title-gold">{t('guidesTitle2')}</span>
+            </h2>
+            <p className="subtitle-elegant">{t('guidesSubtitle')}</p>
+          </div>
+
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem'}}>
+            {guideHighlights.map((guide) => (
+              <article className="studio-card" key={guide.slug}>
+                <h3 style={{fontSize: '1.25rem', color: 'var(--gold-primary)', marginBottom: '0.75rem'}}>
+                  {guide.copy.title}
+                </h3>
+                <p style={{color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '1rem'}}>
+                  {guide.copy.description}
+                </p>
+                <Link
+                  href={`/guides/${guide.slug}`}
+                  className="btn-outline-gold"
+                  style={{textDecoration: 'none', display: 'inline-flex'}}
+                >
+                  {t('guidesRead')}
+                </Link>
+              </article>
+            ))}
+          </div>
+
+          <div style={{textAlign: 'center', marginTop: '2.5rem'}}>
+            <Link
+              href="/guides"
+              className="btn-gold"
+              style={{display: 'inline-flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none'}}
+            >
+              <i className="fas fa-book-open" />
+              {t('guidesCta')}
+            </Link>
           </div>
         </div>
       </section>

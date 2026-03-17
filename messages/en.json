@@ -4,7 +4,17 @@
     "create": "Create",
     "profile": "Profile",
     "privacy": "Privacy & Terms",
+    "guides": "Guides",
     "cta": "Start Creating"
+  },
+  "Footer": {
+    "description": "Create social-ready AI portraits with strong face consistency and practical style controls.",
+    "quickLinks": "Quick links",
+    "resources": "Resources",
+    "guidesHub": "Guides hub",
+    "sitemap": "XML sitemap",
+    "robots": "Robots policy",
+    "copyright": "© {year} LUMINA STUDIO. All rights reserved."
   },
   "Language": {
     "label": "Language",
@@ -108,7 +118,12 @@
     "ctaTitle2": "signature moment",
     "ctaTitle3": "?",
     "ctaSubtitle": "Join tens of thousands of users and start creating today.",
-    "ctaButton": "Start Free Trial"
+    "ctaButton": "Start Free Trial",
+    "guidesTitle1": "Learn with",
+    "guidesTitle2": "Guides",
+    "guidesSubtitle": "Actionable playbooks for headshots, social profiles, and face consistency.",
+    "guidesRead": "Read guide",
+    "guidesCta": "Browse all guides"
   },
   "Create": {
     "title1": "Creation",

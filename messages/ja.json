@@ -4,7 +4,17 @@
     "create": "作成",
     "profile": "プロフィール",
     "privacy": "プライバシー・規約",
+    "guides": "ガイド",
     "cta": "作成を開始"
+  },
+  "Footer": {
+    "description": "顔の一貫性を重視した、SNS向けAIポートレート制作プラットフォーム。",
+    "quickLinks": "クイックリンク",
+    "resources": "リソース",
+    "guidesHub": "ガイド一覧",
+    "sitemap": "サイトマップ",
+    "robots": "クローラーポリシー",
+    "copyright": "© {year} LUMINA STUDIO. All rights reserved."
   },
   "Language": {
     "label": "言語",
@@ -105,7 +115,12 @@
     "ctaTitle2": "特別な瞬間",
     "ctaTitle3": "を作りませんか？",
     "ctaSubtitle": "多くのユーザーと一緒に、AI写真制作を始めましょう。",
-    "ctaButton": "無料で試す"
+    "ctaButton": "無料で試す",
+    "guidesTitle1": "実践",
+    "guidesTitle2": "ガイド",
+    "guidesSubtitle": "AIヘッドショット、SNS写真、顔の一貫性に関する実用ガイド集。",
+    "guidesRead": "ガイドを読む",
+    "guidesCta": "すべてのガイドを見る"
   },
   "Create": {
     "title1": "作成",
