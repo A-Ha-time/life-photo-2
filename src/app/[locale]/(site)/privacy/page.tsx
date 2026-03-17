@@ -153,13 +153,58 @@ export default async function PrivacyPage() {
               <h3 style={{color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.25rem', marginBottom: '1rem'}}>
                 {t('t4Title')}
               </h3>
-              <ul style={{listStyle: 'disc', marginLeft: '2rem', marginBottom: 0}}>
+              <ul style={{listStyle: 'disc', marginLeft: '2rem', marginBottom: '2rem'}}>
                 {t.raw('t4Items').map((x: string, idx: number) => (
                   <li key={idx} style={{marginBottom: '0.5rem'}}>
                     {x}
                   </li>
                 ))}
               </ul>
+
+              <h3 style={{color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.25rem', marginBottom: '1rem'}}>
+                {t('refundTitle')}
+              </h3>
+              <p style={{marginBottom: '1rem'}}>{t('refundWindowText')}</p>
+
+              <h3 style={{color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.125rem', marginBottom: '1rem'}}>
+                {t('refundEligibleTitle')}
+              </h3>
+              <ul style={{listStyle: 'disc', marginLeft: '2rem', marginBottom: '2rem'}}>
+                {t.raw('refundEligibleItems').map((x: string, idx: number) => (
+                  <li key={idx} style={{marginBottom: '0.5rem'}}>
+                    {x}
+                  </li>
+                ))}
+              </ul>
+
+              <h3 style={{color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.125rem', marginBottom: '1rem'}}>
+                {t('refundNonEligibleTitle')}
+              </h3>
+              <ul style={{listStyle: 'disc', marginLeft: '2rem', marginBottom: '2rem'}}>
+                {t.raw('refundNonEligibleItems').map((x: string, idx: number) => (
+                  <li key={idx} style={{marginBottom: '0.5rem'}}>
+                    {x}
+                  </li>
+                ))}
+              </ul>
+
+              <h3 style={{color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.125rem', marginBottom: '1rem'}}>
+                {t('refundRequestTitle')}
+              </h3>
+              <p style={{marginBottom: '1rem'}}>{t('refundRequestText')}</p>
+              <ul style={{listStyle: 'disc', marginLeft: '2rem', marginBottom: '2rem'}}>
+                {t.raw('refundRequestItems').map((x: string, idx: number) => (
+                  <li key={idx} style={{marginBottom: '0.5rem'}}>
+                    {x}
+                  </li>
+                ))}
+              </ul>
+
+              <h3 style={{color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.125rem', marginBottom: '1rem'}}>
+                {t('refundProcessingTitle')}
+              </h3>
+              <p style={{marginBottom: '1rem'}}>{t('refundProcessingText')}</p>
+              <p style={{marginBottom: 0}}>{t('refundRightsText')}</p>
             </div>
           </div>
 
@@ -170,18 +215,18 @@ export default async function PrivacyPage() {
             <p style={{color: 'var(--text-secondary)', marginBottom: '1.5rem'}}>{t('contactSubtitle')}</p>
             <div style={{display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center'}}>
               <a
-                href="mailto:privacy@luminastudio.com"
+                href="mailto:ahai169989@gmail.com"
                 style={{color: 'var(--gold-light)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem'}}
               >
                 <i className="fas fa-envelope" />
-                privacy@luminastudio.com
+                ahai169989@gmail.com
               </a>
               <a
-                href="mailto:support@luminastudio.com"
+                href="mailto:ahai169989@gmail.com"
                 style={{color: 'var(--gold-light)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem'}}
               >
                 <i className="fas fa-headset" />
-                support@luminastudio.com
+                ahai169989@gmail.com
               </a>
             </div>
           </div>

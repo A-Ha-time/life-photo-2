@@ -38,8 +38,8 @@ export function Navbar() {
           </li>
           <li>
             <Link
-              href="/profile"
-              className={`navbar-link ${isActive('/profile') ? 'active' : ''}`}
+              href="/pricing"
+              className={`navbar-link ${isActive('/pricing') ? 'active' : ''}`}
             >
               {t('profile')}
             </Link>

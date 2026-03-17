@@ -2,7 +2,7 @@
   "Nav": {
     "home": "Home",
     "create": "Create",
-    "profile": "Profile",
+    "profile": "Pricing",
     "privacy": "Privacy & Terms",
     "guides": "Guides",
     "cta": "Start Creating"
@@ -225,11 +225,83 @@
       "copyFailed": "Copy failed"
     }
   },
+  "Pricing": {
+    "title1": "Pricing",
+    "title2": "Plans",
+    "subtitle": "Flexible credits for different creation intensity.",
+    "lastUpdated": "Last updated: 2026-03-17",
+    "plansTitle": "Choose your plan",
+    "plansSubtitle": "All plans use the same generation quality and model capabilities.",
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "period": "/month",
+      "items": [
+        "First sign-in bonus: 30 credits",
+        "Daily credits: 10/day",
+        "2K generation: 3 credits each",
+        "4K generation: 9 credits each"
+      ],
+      "cta": "Start for free"
+    },
+    "monthly": {
+      "name": "Pro Monthly",
+      "price": "$29.9",
+      "period": "/month",
+      "items": [
+        "Daily credits: 90/day",
+        "2K generation: 3 credits each",
+        "4K generation: 9 credits each",
+        "Cancel anytime (effective at period end)"
+      ],
+      "cta": "Choose monthly"
+    },
+    "yearly": {
+      "name": "Pro Yearly",
+      "price": "$299",
+      "period": "/year",
+      "badge": "Best value",
+      "items": [
+        "Daily credits: 120/day",
+        "2K generation: 3 credits each",
+        "4K generation: 9 credits each",
+        "Cancel anytime (effective at period end)"
+      ],
+      "cta": "Choose yearly"
+    },
+    "commonTitle": "Credits & billing notes",
+    "commonItems": [
+      "Credits can roll over for up to 30 days, with a cap of 2x monthly quota.",
+      "Subscriptions are billed securely through Paddle.",
+      "Subscriptions renew automatically unless canceled before the next renewal date.",
+      "Generation failures are automatically refunded according to system rules.",
+      "Taxes may apply based on your billing region."
+    ],
+    "faqTitle": "FAQ",
+    "faqItems": [
+      {
+        "q": "How are credits consumed?",
+        "a": "2K uses 3 credits per image; 4K uses 9 credits per image."
+      },
+      {
+        "q": "Can I cancel anytime?",
+        "a": "Yes. Cancellation stops the next renewal and your current paid period remains active."
+      },
+      {
+        "q": "How do I request a refund?",
+        "a": "Please refer to Privacy & Terms and email ahai169989@gmail.com within 7 days with your Paddle order details."
+      }
+    ],
+    "ctaTitle": "Ready to unlock more daily credits?",
+    "ctaSubtitle": "Pick a plan and start generating at a higher volume today.",
+    "ctaPrimary": "Go to Create",
+    "ctaSecondary": "View refund policy"
+  },
   "Privacy": {
     "title1": "Privacy",
     "title2": "Terms",
     "subtitle": "We protect your privacy and provide high-quality service.",
-    "lastUpdated": "Last updated: 2025-12-09",
+    "lastUpdated": "Last updated: 2026-03-17",
     "privacyTitle": "Privacy Policy",
     "p1Title": "1. Information we collect",
     "p1Items": [
@@ -260,6 +332,31 @@
     "t3Text": "You have usage rights for generated photos. We retain rights to the underlying technology and algorithms.",
     "t4Title": "4. Service limitations",
     "t4Items": ["We may suspend abusive accounts", "We may adjust quotas and limits", "We may update the service"],
+    "refundTitle": "5. Refund Policy",
+    "refundWindowText": "Refund requests must be submitted within 7 days of the original purchase date.",
+    "refundEligibleTitle": "Eligible refund cases",
+    "refundEligibleItems": [
+      "You were charged more than once for the same order.",
+      "The transaction was unauthorized (subject to verification).",
+      "A technical issue on our side prevented delivery or normal use and could not be resolved in a reasonable time."
+    ],
+    "refundNonEligibleTitle": "Non-refundable cases",
+    "refundNonEligibleItems": [
+      "The service/content has already been delivered, generated, downloaded, or substantially used.",
+      "The request is based on a change of mind or personal preference.",
+      "The account is restricted due to violations of our Terms of Service.",
+      "The request is submitted more than 7 days after purchase."
+    ],
+    "refundRequestTitle": "How to request a refund",
+    "refundRequestText": "Email ahai169989@gmail.com and include the following details:",
+    "refundRequestItems": [
+      "The email used for purchase",
+      "Paddle order or transaction ID",
+      "A brief description of the issue (screenshots if available)"
+    ],
+    "refundProcessingTitle": "Processing and payment method",
+    "refundProcessingText": "Approved refunds are returned to the original payment method through Paddle, usually within 5-10 business days (depending on your bank or payment provider).",
+    "refundRightsText": "Nothing in this policy limits mandatory consumer rights under applicable law.",
     "contactTitle": "Contact us",
     "contactSubtitle": "If you have any questions, please reach out."
   }

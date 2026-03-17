@@ -7,7 +7,7 @@ import {getSiteUrl} from '@/lib/seo';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = getSiteUrl();
   const now = new Date();
-  const routes = ['home', 'create', 'privacy', 'guides'] as const;
+  const routes = ['home', 'create', 'pricing', 'privacy', 'guides'] as const;
   const guideMetaList = getGuideMetaList();
 
   const pageEntries = routing.locales.flatMap((locale) =>
