@@ -1,8 +1,9 @@
 import './globals.css';
 
 import type {Metadata} from 'next';
-import {cookies} from 'next/headers';
+import {headers} from 'next/headers';
 
+import {routing, type AppLocale} from '@/i18n/routing';
 import {getSiteUrl} from '@/lib/seo';
 
 const googleVerificationToken =
@@ -10,6 +11,7 @@ const googleVerificationToken =
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
+  applicationName: 'LUMINA STUDIO',
   title: 'LUMINA STUDIO',
   description: 'AI-driven photo generation studio',
   verification: googleVerificationToken
@@ -20,15 +22,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
-  const locale = cookies().get('NEXT_LOCALE')?.value ?? 'en';
+  const headerList = headers();
+  const requestLocale = headerList.get('x-next-intl-locale') as AppLocale | null;
+  const htmlLang: AppLocale =
+    requestLocale && routing.locales.includes(requestLocale) ? requestLocale : routing.defaultLocale;
 
   return (
-    <html lang={locale}>
+    <html lang={htmlLang}>
       <head>
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
+        <link rel="alternate" type="application/rss+xml" title="LUMINA STUDIO Guides" href="/feed.xml" />
       </head>
       <body>{children}</body>
     </html>

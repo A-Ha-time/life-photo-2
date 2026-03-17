@@ -33,6 +33,7 @@ npm run dev
 - `POSTGRES_URL`：Vercel Postgres 连接串（用于保存任务/作品/收藏）
 - `APP_BASE_URL`（可选）：站点公网域名（建议 `https://xxx.vercel.app` 或自定义域名）
 - `WEBHOOK_SECRET`（推荐）：Webhook 校验密钥（>=8 位）
+- `GOOGLE_SITE_VERIFICATION`（可选）：Google Search Console 验证 token
 
 注意：Evolink 需要能直接访问你提供的参考图 URL；因此上传使用 Vercel Blob（公网 https）。本地开发如果想启用 webhook 回调，需要把本机暴露为 `https://` 域名并写入 `APP_BASE_URL`，否则会自动关闭 webhook、仅通过任务轮询获取结果。
 
@@ -46,6 +47,7 @@ npm run dev
    - `EVOLINK_API_KEY`
    - `WEBHOOK_SECRET`（推荐）
    - `APP_BASE_URL`（可选，建议填生产域名）
+   - `GOOGLE_SITE_VERIFICATION`（可选，启用 GSC 站点验证）
 4. 部署后打开站点即可验证：上传 → 选择场景 → 生成 → 预览/下载/分享
 
 ## 目录结构（关键）

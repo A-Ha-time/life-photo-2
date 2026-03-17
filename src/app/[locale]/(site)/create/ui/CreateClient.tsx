@@ -936,7 +936,11 @@ export function CreateClient() {
                             aria-label={t('preview.thumb', {index: idx + 1})}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={img.url} alt="" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                            <img
+                              src={img.url}
+                              alt={t('preview.thumb', {index: idx + 1})}
+                              style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                            />
                           </button>
                         ))}
                       </div>

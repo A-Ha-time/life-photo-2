@@ -5,7 +5,12 @@ import {notFound} from 'next/navigation';
 
 import type {AppLocale} from '@/i18n/routing';
 import {routing} from '@/i18n/routing';
-import {getSiteUrl} from '@/lib/seo';
+import {
+  getDefaultSocialImage,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
+  getSiteUrl
+} from '@/lib/seo';
 
 export async function generateMetadata({
   params
@@ -20,6 +25,7 @@ export async function generateMetadata({
   const description = t('description');
   const keywords = t.raw('keywords') as string[];
   const baseUrl = getSiteUrl();
+  const socialImage = getDefaultSocialImage();
 
   return {
     metadataBase: new URL(baseUrl),
@@ -30,11 +36,12 @@ export async function generateMetadata({
       title,
       description,
       siteName: 'LUMINA STUDIO',
-      locale,
+      locale: getOpenGraphLocale(locale),
+      alternateLocale: getOpenGraphAlternateLocales(locale),
       type: 'website',
       images: [
         {
-          url: 'https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200&h=630&fit=crop',
+          url: socialImage,
           width: 1200,
           height: 630,
           alt: title
@@ -45,7 +52,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: ['https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200&h=630&fit=crop']
+      images: [socialImage]
     }
   };
 }

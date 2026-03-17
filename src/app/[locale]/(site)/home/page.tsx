@@ -1,10 +1,17 @@
 import type {Metadata} from 'next';
-import {getLocale, getTranslations} from 'next-intl/server';
+import {getTranslations} from 'next-intl/server';
 
 import {Link} from '@/i18n/navigation';
-import {routing, type AppLocale} from '@/i18n/routing';
+import type {AppLocale} from '@/i18n/routing';
 import {getGuides} from '@/lib/guides';
-import {getSiteUrl} from '@/lib/seo';
+import {
+  getDefaultSocialImage,
+  getLocaleAlternates,
+  getLocalizedUrl,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
+  getSiteUrl
+} from '@/lib/seo';
 
 export async function generateMetadata({
   params
@@ -13,13 +20,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const {locale} = params;
   const seo = await getTranslations({locale, namespace: 'SEO'});
-  const baseUrl = getSiteUrl();
-  const canonical = `${baseUrl}/${locale}/home`;
-  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
-    acc[l] = `${baseUrl}/${l}/home`;
-    return acc;
-  }, {});
-  languages['x-default'] = `${baseUrl}/en/home`;
+  const socialImage = getDefaultSocialImage();
+  const canonical = getLocalizedUrl(locale, '/home');
+  const languages = getLocaleAlternates('/home');
 
   return {
     title: seo('title'),
@@ -34,13 +37,16 @@ export async function generateMetadata({
       description: seo('description'),
       url: canonical,
       siteName: seo('siteName'),
-      locale,
-      type: 'website'
+      locale: getOpenGraphLocale(locale),
+      alternateLocale: getOpenGraphAlternateLocales(locale),
+      type: 'website',
+      images: [{url: socialImage, width: 1200, height: 630, alt: seo('title')}]
     },
     twitter: {
       card: 'summary_large_image',
       title: seo('title'),
-      description: seo('description')
+      description: seo('description'),
+      images: [socialImage]
     },
     robots: {
       index: true,
@@ -56,12 +62,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function HomePage() {
+export default async function HomePage({params}: {params: {locale: AppLocale}}) {
   const t = await getTranslations('Home');
   const seo = await getTranslations('SEO');
-  const locale = (await getLocale()) as AppLocale;
+  const locale = params.locale;
   const baseUrl = getSiteUrl();
-  const canonical = `${baseUrl}/${locale}/home`;
+  const canonical = getLocalizedUrl(locale, '/home');
   const keywords = (seo.raw('keywords') as string[]).join(', ');
   const guideHighlights = getGuides(locale).slice(0, 3);
   const websiteSchema = {

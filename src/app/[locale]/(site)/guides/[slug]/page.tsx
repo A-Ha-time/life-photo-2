@@ -1,15 +1,16 @@
 import type {Metadata} from 'next';
-import {getLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 
-import {Link} from '@/i18n/navigation';
-import {routing, type AppLocale} from '@/i18n/routing';
-import {getGuide, getGuideSlugs, getRelatedGuides} from '@/lib/guides';
-import {getSiteUrl} from '@/lib/seo';
-
-export function generateStaticParams() {
-  return getGuideSlugs().map((slug) => ({slug}));
-}
+import type {AppLocale} from '@/i18n/routing';
+import {getGuide, getRelatedGuides} from '@/lib/guides';
+import {
+  getDefaultSocialImage,
+  getLocaleAlternates,
+  getLocalizedUrl,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
+  getSiteUrl
+} from '@/lib/seo';
 
 export async function generateMetadata({
   params
@@ -21,12 +22,9 @@ export async function generateMetadata({
   if (!guide) notFound();
 
   const baseUrl = getSiteUrl();
-  const canonical = `${baseUrl}/${locale}/guides/${slug}`;
-  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
-    acc[l] = `${baseUrl}/${l}/guides/${slug}`;
-    return acc;
-  }, {});
-  languages['x-default'] = `${baseUrl}/en/guides/${slug}`;
+  const socialImage = getDefaultSocialImage();
+  const canonical = getLocalizedUrl(locale, `/guides/${slug}`);
+  const languages = getLocaleAlternates(`/guides/${slug}`);
 
   return {
     title: `${guide.copy.title} | LUMINA STUDIO`,
@@ -40,8 +38,16 @@ export async function generateMetadata({
       description: guide.copy.description,
       url: canonical,
       siteName: 'LUMINA STUDIO',
-      locale,
-      type: 'article'
+      locale: getOpenGraphLocale(locale),
+      alternateLocale: getOpenGraphAlternateLocales(locale),
+      type: 'article',
+      images: [{url: socialImage, width: 1200, height: 630, alt: `${guide.copy.title} | LUMINA STUDIO`}]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${guide.copy.title} | LUMINA STUDIO`,
+      description: guide.copy.description,
+      images: [socialImage]
     },
     robots: {
       index: true,
@@ -51,15 +57,16 @@ export async function generateMetadata({
 }
 
 export default async function GuideDetailPage({params}: {params: {locale: AppLocale; slug: string}}) {
-  const locale = (await getLocale()) as AppLocale;
+  const locale = params.locale;
   const guide = getGuide(locale, params.slug);
   if (!guide) notFound();
   const relatedGuides = getRelatedGuides(locale, guide.slug, 3);
+  const withLocale = (path: string) => `/${locale}${path}`;
 
   const baseUrl = getSiteUrl();
-  const homeUrl = `${baseUrl}/${locale}/home`;
-  const guidesUrl = `${baseUrl}/${locale}/guides`;
-  const canonical = `${baseUrl}/${locale}/guides/${guide.slug}`;
+  const homeUrl = getLocalizedUrl(locale, '/home');
+  const guidesUrl = getLocalizedUrl(locale, '/guides');
+  const canonical = getLocalizedUrl(locale, `/guides/${guide.slug}`);
   const publishedAt = `${guide.updatedAt}T00:00:00.000Z`;
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -126,7 +133,7 @@ export default async function GuideDetailPage({params}: {params: {locale: AppLoc
     itemListElement: relatedGuides.map((item, idx) => ({
       '@type': 'ListItem',
       position: idx + 1,
-      url: `${baseUrl}/${locale}/guides/${item.slug}`,
+      url: getLocalizedUrl(locale, `/guides/${item.slug}`),
       name: item.copy.title
     }))
   };
@@ -174,9 +181,9 @@ export default async function GuideDetailPage({params}: {params: {locale: AppLoc
       <section className="section-spacing" style={{paddingTop: 24}}>
         <div className="container-studio" style={{maxWidth: 900}}>
           <p style={{marginBottom: 18}}>
-            <Link href="/guides" style={{color: 'var(--gold-light)', textDecoration: 'none'}}>
+            <a href={withLocale('/guides')} style={{color: 'var(--gold-light)', textDecoration: 'none'}}>
               {text.back}
-            </Link>
+            </a>
           </p>
 
           <article className="studio-card">
@@ -225,9 +232,9 @@ export default async function GuideDetailPage({params}: {params: {locale: AppLoc
                   <article className="floating-card" style={{padding: '1rem 1.1rem'}} key={item.slug}>
                     <h3 style={{fontSize: '1rem', color: 'var(--champagne)', marginBottom: 8}}>{item.copy.title}</h3>
                     <p style={{color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 12}}>{item.copy.description}</p>
-                    <Link href={`/guides/${item.slug}`} style={{color: 'var(--gold-light)', textDecoration: 'none'}}>
+                    <a href={withLocale(`/guides/${item.slug}`)} style={{color: 'var(--gold-light)', textDecoration: 'none'}}>
                       {text.read}
-                    </Link>
+                    </a>
                   </article>
                 ))}
               </div>

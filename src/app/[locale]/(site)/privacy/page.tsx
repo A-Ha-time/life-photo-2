@@ -1,8 +1,14 @@
 import type {Metadata} from 'next';
 import {getTranslations} from 'next-intl/server';
 
-import {routing, type AppLocale} from '@/i18n/routing';
-import {getSiteUrl} from '@/lib/seo';
+import type {AppLocale} from '@/i18n/routing';
+import {
+  getDefaultSocialImage,
+  getLocaleAlternates,
+  getLocalizedUrl,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale
+} from '@/lib/seo';
 
 export async function generateMetadata({
   params
@@ -14,13 +20,9 @@ export async function generateMetadata({
     getTranslations({locale, namespace: 'SEO'}),
     getTranslations({locale, namespace: 'Privacy'})
   ]);
-  const baseUrl = getSiteUrl();
-  const canonical = `${baseUrl}/${locale}/privacy`;
-  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
-    acc[l] = `${baseUrl}/${l}/privacy`;
-    return acc;
-  }, {});
-  languages['x-default'] = `${baseUrl}/en/privacy`;
+  const socialImage = getDefaultSocialImage();
+  const canonical = getLocalizedUrl(locale, '/privacy');
+  const languages = getLocaleAlternates('/privacy');
   const title = `${privacy('title1')} ${privacy('title2')} | ${seo('siteName')}`;
   const description = privacy('subtitle');
 
@@ -36,13 +38,16 @@ export async function generateMetadata({
       description,
       url: canonical,
       siteName: seo('siteName'),
-      locale,
-      type: 'article'
+      locale: getOpenGraphLocale(locale),
+      alternateLocale: getOpenGraphAlternateLocales(locale),
+      type: 'article',
+      images: [{url: socialImage, width: 1200, height: 630, alt: title}]
     },
     twitter: {
       card: 'summary_large_image',
       title,
-      description
+      description,
+      images: [socialImage]
     },
     robots: {
       index: true,

@@ -1,10 +1,16 @@
 import type {Metadata} from 'next';
-import {getLocale} from 'next-intl/server';
 
 import {Link} from '@/i18n/navigation';
-import {routing, type AppLocale} from '@/i18n/routing';
+import type {AppLocale} from '@/i18n/routing';
 import {getGuides} from '@/lib/guides';
-import {getSiteUrl} from '@/lib/seo';
+import {
+  getDefaultSocialImage,
+  getLocaleAlternates,
+  getLocalizedUrl,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
+  getSiteUrl
+} from '@/lib/seo';
 
 function getGuidesPageText(locale: AppLocale) {
   if (locale === 'zh') {
@@ -26,14 +32,10 @@ export async function generateMetadata({
   params: {locale: AppLocale};
 }): Promise<Metadata> {
   const {locale} = params;
-  const baseUrl = getSiteUrl();
+  const socialImage = getDefaultSocialImage();
   const copy = getGuidesPageText(locale);
-  const canonical = `${baseUrl}/${locale}/guides`;
-  const languages = routing.locales.reduce<Record<string, string>>((acc, l) => {
-    acc[l] = `${baseUrl}/${l}/guides`;
-    return acc;
-  }, {});
-  languages['x-default'] = `${baseUrl}/en/guides`;
+  const canonical = getLocalizedUrl(locale, '/guides');
+  const languages = getLocaleAlternates('/guides');
 
   return {
     title: `${copy.title} | LUMINA STUDIO`,
@@ -47,8 +49,16 @@ export async function generateMetadata({
       description: copy.description,
       url: canonical,
       siteName: 'LUMINA STUDIO',
-      locale,
-      type: 'website'
+      locale: getOpenGraphLocale(locale),
+      alternateLocale: getOpenGraphAlternateLocales(locale),
+      type: 'website',
+      images: [{url: socialImage, width: 1200, height: 630, alt: `${copy.title} | LUMINA STUDIO`}]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${copy.title} | LUMINA STUDIO`,
+      description: copy.description,
+      images: [socialImage]
     },
     robots: {
       index: true,
@@ -57,8 +67,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function GuidesPage() {
-  const locale = (await getLocale()) as AppLocale;
+export default async function GuidesPage({params}: {params: {locale: AppLocale}}) {
+  const locale = params.locale;
   const copy = getGuidesPageText(locale);
   const guides = getGuides(locale);
   const baseUrl = getSiteUrl();
